@@ -12,12 +12,7 @@ const GlobalStyles = createGlobalStyle`
         background-color: var(--color-bg-100);
         letter-spacing: -1px;
         line-height: 1;
-        /* font-family: 'Montserrat', sans-serif;
-font-family: 'Noto Serif KR', serif; */
         font-family: "Noto Sans KR", sans-serif;
-        
-        /* height: 100vh; */
-        /*width:100vw; */
         font-size: 0.875rem;
         font-weight: 300;
     }
@@ -58,10 +53,7 @@ font-family: 'Noto Serif KR', serif; */
     /* font-family: 'Noto Serif KR', serif; */
     font-family: 'Montserrat', sans-serif;
     font-weight:200;
-    /* letter-spacing: -4px; */
-    /* &::first-letter {
-      color: var(--color-primary);
-    } */
+
   }
 `;
 
