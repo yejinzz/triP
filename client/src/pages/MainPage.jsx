@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import TypingText from "@/components/common/TypingText";
-import backgroundImage from "../assets/images/bg2.jpg";
+import backgroundImage from "@/assets/images/bg2.jpg";
 
 const MainPage = () => {
   return (
@@ -12,9 +12,6 @@ const MainPage = () => {
           <TypingText fontSize={"1.3rem"}>
             파워 P의 여행 계획을 쉽고 알차게 !
           </TypingText>
-          {/* <Link to="/diary">
-          <Button size={"7.5rem"}>무드 기록하기</Button>
-        </Link> */}
         </Content>
       </BackGroundImg>
       <p className="logo_style">MBTI, P의 여행.</p>
