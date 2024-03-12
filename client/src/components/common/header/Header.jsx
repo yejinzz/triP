@@ -57,12 +57,12 @@ const HeaderContainer = styled.header`
           background-color: var(--color-bg-100);
         `}
   top: 0;
-  z-index: 1;
+  z-index: 99;
   transition: background-color 0.2s ease-out;
 `;
 const HeaderWrapper = styled.div`
   width: 100%;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   padding: 0 2rem;
   display: flex;
   justify-content: space-between;
