@@ -8,7 +8,7 @@ import Button from "@/components/atom/button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenModal, setCloseModal } from "@/store/slice/modalSlice";
 import RegionCard from "@/components/common/RegionCard";
-import { REGIONS_INFO } from "@/constants/regions";
+import { REGIONS_INFO } from "@/datas/regions";
 import TripDatePicker from "@/components/plan/date/TripDatePicker";
 import PlaceSearchTool from "@/components/plan/place/PlaceSearchTool";
 import { setDestination } from "@/store/slice/placeSlice";

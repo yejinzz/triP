@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import SearchBar from "@/components/map/SearchBar";
-// import PlaceCartegoryBtn from "./PlaceCartegoryBtn";
 import PlaceListCard from "./PlaceListCard";
 import styled from "styled-components";
-import instance from "@/api/instanse";
+import instance from "@/api/instance";
 import { useDispatch, useSelector } from "react-redux";
-import { MAP_CATEGORIES } from "@/constants/categories";
+import { MAP_CATEGORIES } from "@/datas/categories";
 import Button from "@/components/atom/button/Button";
 import { setSchedule } from "@/store/slice/scheduleSlice";
 
