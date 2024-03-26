@@ -1,8 +1,28 @@
 import styled from "styled-components";
+import { setDestination } from "@/store/slice/placeSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-const RegionCard = ({ isSelected, regionInfo, onClick }) => {
+const RegionCard = ({ regionInfo }) => {
+  const destination = useSelector((state) => state.place.destination);
+
+  const dispatch = useDispatch();
+  const handleRegionClick = (region) => {
+    dispatch(
+      setDestination({
+        coords: { lat: region.coords.lat, lng: region.coords.lng },
+        regionCode: region.code,
+        regionName: region.name,
+        regionImg: region.imgUrl,
+      })
+    );
+    // setSelectedRegion();
+  };
+  const isSelected = destination.regionCode === regionInfo.code;
   return (
-    <RegionList onClick={onClick} isSelected={isSelected}>
+    <RegionList
+      onClick={() => handleRegionClick(regionInfo)}
+      isSelected={isSelected}
+    >
       <img src={regionInfo.imgUrl} alt={regionInfo.name} />
       <div className="region-info">
         <h1>{regionInfo.nameEng}</h1>
