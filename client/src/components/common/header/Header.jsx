@@ -24,9 +24,7 @@ const Header = () => {
     <>
       <HeaderContainer isHome={isHome} headerColor={headerColor}>
         <HeaderWrapper>
-          <Link to="/">
-            <Logo isHome={isHome} />
-          </Link>
+          <Logo isHome={isHome} />
           <NavBox>
             <NavBar isHome={isHome} />
             <Link to="/login">
@@ -69,7 +67,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
-const NavBox = styled.div`
+const NavBox = styled.nav`
   display: flex;
   align-items: center;
 `;

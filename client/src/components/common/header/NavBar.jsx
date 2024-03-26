@@ -1,15 +1,14 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const NavBar = ({ isHome }) => {
   return (
     <ListContainer isHome={isHome}>
-      {nav.map((el) => {
+      {nav.map((el, idx) => {
         return (
-          <Link to={el.endPoint}>
-            <li>{el.name}</li>
-          </Link>
+          <li key={idx}>
+            <Link to={el.endPoint}>{el.name}</Link>
+          </li>
         );
       })}
     </ListContainer>
