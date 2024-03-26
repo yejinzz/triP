@@ -12,12 +12,13 @@ export default Button;
 
 const VARIANT = {
   default: css`
-    /* font-weight: 500;
-    text-shadow: 1px 1px 1px #fff; */
-    /* box-shadow: 0px 0px 11px -5px rgba(0, 0, 0, 0.1); */
+    background-color: ${(props) =>
+      props.selected ? "var(--color-primary)" : null};
+
+    color: ${(props) => (props.selected ? "#fff" : null)};
     box-shadow: -3px -3px 10px rgba(255, 255, 255, 0.7),
       5px 5px 10px rgba(0, 0, 0, 0.2);
-    /* box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.2), 2px 2px 3px rgba(0, 0, 0, 0.2); */
+
     &:hover {
       box-shadow: -2px -2px 3px rgba(255, 255, 255, 0.6),
         2px 2px 3px rgba(0, 0, 0, 0.1);
@@ -40,19 +41,19 @@ const VARIANT = {
   `,
   outline: css`
     background-color: ${(props) =>
-      props.selected ? "var(--color-primary)" : "transparent"};
-    /* ${(props) =>
-      props.className ? "var(--color-primary)" : "transparent"}; */
-    /* color: var(--color-primary); */
+      props.selected ? "var(--color-primary-80)" : "transparent"};
+
     color: ${(props) => (props.selected ? "#fff" : "var(--color-primary)")};
     border: 1px solid var(--color-primary);
+    /* border: ${(props) =>
+      props.selected ? null : "1px solid var(--color-primary)"}; */
     /* box-shadow: none; */
     &:hover {
       border: 1px solid var(--color-primary-50);
       box-shadow: none;
     }
     &:active {
-      box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.15);
+      box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.15);
     }
   `,
 };
@@ -63,15 +64,9 @@ const S_Button = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: ${(props) => (props.radius ? props.radius : "10px")};
-  /* width: ${(props) => (props.width ? props.width : "100%")}; */
   width: 100%;
   /* min-width: max-content; */
   transition: all 0.2s ease;
   text-transform: uppercase;
   padding: 0.7rem;
-
-  &.select {
-    background-color: var(--color-primary);
-    color: #fff;
-  }
 `;
