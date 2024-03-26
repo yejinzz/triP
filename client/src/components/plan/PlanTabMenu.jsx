@@ -1,23 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Button from "../atom/button/Button";
-import { setSelectDay } from "../../store/slice/scheduleSlice";
+import { setSelectDay } from "@/store/slice/scheduleSlice";
+import { setCloseModal } from "@/store/slice/modalSlice";
 
-const PlanTabMenu = ({ dayDiff }) => {
+const PlanTabMenu = ({ dayDiff, savePlan }) => {
   const dispatch = useDispatch();
-  const modalOpen = useSelector((state) => state.modal.isOpen);
+  // const modalOpen = useSelector((state) => state.modal.isOpen);
   const selectedDay = useSelector((state) => state.schedule.selectedDay);
+  // const selectedDay = useSelector((state) => state.schedule.selectedDay);
 
   const handleClickButton = (day) => {
     dispatch(setSelectDay(`day ${day}`));
+    dispatch(setCloseModal());
   };
-  // console.log(isSelectedDay);
+  console.log(dayDiff);
 
   return (
     <TabMenuWrapper>
       <DayLists>
         {dayDiff &&
-          !modalOpen &&
+          // !modalOpen &&
           Array(dayDiff)
             .fill(null)
             .map((_, idx) => (
@@ -34,7 +37,7 @@ const PlanTabMenu = ({ dayDiff }) => {
             ))}
       </DayLists>
       {/* <div> */}
-      <Button variant="primary" radius="10px">
+      <Button variant="primary" radius="10px" onClick={() => savePlan()}>
         저장
       </Button>
       {/* </div> */}

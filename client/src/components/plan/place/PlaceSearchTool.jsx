@@ -1,111 +1,105 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import SearchBar from "@/components/map/SearchBar";
-import PlaceListCard from "./PlaceListCard";
+import PlaceItem from "./PlaceItem";
 import styled from "styled-components";
-import instance from "@/api/instance";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { MAP_CATEGORIES } from "@/datas/categories";
-import Button from "@/components/atom/button/Button";
-import { setSchedule } from "@/store/slice/scheduleSlice";
+import SearchResultBox from "./SearchResultBox";
+import Loading from "@/components/common/Loding";
+import useCloseModal from "@/hooks/useCloseModal";
+import { instance } from "@/api/instance";
 
-const PlaceSearchTool = ({ setMapCenter, setMapLevel, setResult, result }) => {
+const PlaceSearchTool = ({ setResult, result }) => {
   const destination = useSelector((state) => state.place.destination);
-  const selectedDay = useSelector((state) => state.schedule.selectedDay);
 
   const [loading, setLoading] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isSelected, setIsSelected] = useState(null);
 
-  const searchRef = useRef(null);
+  // const searchRef = useRef(null);
   const searchResultRef = useRef(null);
 
   const searchByKeyword = (category) => {
     setLoading(true);
+
     instance
       .get(
-        `/api/places?regionCode=${destination.regionCode}&placeType=${category.placeType}`
+        `/api/places?regionCode=${destination.regionCode}&placeType=${category.typeId}`
       )
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         setResult(res.data);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
+
     setIsSelected(category.name);
     setIsSearchModalOpen(true);
+    // TourInstance.get(
+    //   `/areaBasedList1?serviceKey=${
+    //     import.meta.env.VITE_TOUR_API_KEY
+    //   }&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=R&contentTypeId=${
+    //     category.typeId
+    //   }&areaCode=${destination.regionCode}`
+    // ).then((res) => {
+    //   setLoading(false);
+    //   setResult(res.data.response.body.items.item);
+    //   console.log(res.data.response.body.items.item);
+    // });
   };
-
-  useEffect(() => {
-    // 영역 외 클릭 시 발생하는 이벤트
-    const handleFocus = (e) => {
-      if (searchRef.current && !searchResultRef.current.contains(e.target)) {
-        setIsSearchModalOpen(false);
-        setResult([]);
-        setIsSelected(null);
-      }
-    };
-
-    document.addEventListener("click", handleFocus);
-    return () => {
-      document.removeEventListener("click", handleFocus);
-    };
-  }, [searchRef, searchResultRef]);
-
-  const dispatch = useDispatch();
-
-  const addSchedule = (schedule) => {
-    const day = selectedDay;
-    dispatch(setSchedule({ day, schedule }));
-  };
+  useCloseModal(searchResultRef, () => setIsSearchModalOpen(false));
 
   return (
     <SearchToolContainer ref={searchResultRef}>
       <SearchBar
-        setMapCenter={setMapCenter}
-        setMapLevel={setMapLevel}
+        // setMapCenter={setMapCenter}
+        // setMapLevel={setMapLevel}
         setIsSearchModalOpen={setIsSearchModalOpen}
-        searchRef={searchRef}
+        // searchRef={searchRef}
       />
       <CartegoryWrapper>
         {MAP_CATEGORIES.map((category) => {
           return (
-            <Button
-              // variant="outline"
-              className={`${isSelected === category.name ? "select" : null}`}
+            <CategoryButton
+              aria-label={`${category.name} 키워드 버튼`}
+              selected={isSelected === category.name}
               key={category.id}
               onClick={() => {
                 searchByKeyword(category);
               }}
             >
-              {category.name}
-            </Button>
+              {category.icon}
+            </CategoryButton>
           );
         })}
       </CartegoryWrapper>
-      {isSearchModalOpen &&
-        (result.length === 0 ? (
-          <PlaceList>
-            <p>검색결과가 없습니다.</p>
-          </PlaceList>
-        ) : (
-          <PlaceList>
-            {loading ? (
-              <p>로딩중</p>
-            ) : (
-              result.map((place, idx) => {
-                return (
-                  <PlaceListCard
-                    key={idx}
-                    place={place}
-                    onClick={() => addSchedule(place)}
-                  />
-                );
-              })
-            )}
-          </PlaceList>
-        ))}
+      {isSearchModalOpen && (
+        <SearchResultBox totalNum={result.length} isSelected={isSelected}>
+          {loading ? (
+            <div className="search_box">
+              <Loading />
+            </div>
+          ) : (
+            <>
+              {result.length !== 0 ? (
+                <List>
+                  {result.map((place, idx) => (
+                    <li key={idx}>
+                      <PlaceItem place={place} isAddEnabled={true} />
+                    </li>
+                  ))}
+                </List>
+              ) : (
+                <div className="search_box">
+                  <p>검색결과가 없습니다.</p>
+                </div>
+              )}
+            </>
+          )}
+        </SearchResultBox>
+      )}
     </SearchToolContainer>
   );
 };
@@ -120,27 +114,31 @@ const SearchToolContainer = styled.div`
   width: 350px;
 `;
 
-const PlaceList = styled.div`
-  padding: 0 0.5rem;
-  /* height: calc(100% - 150px); */
-
-  max-height: 500px;
-  overflow-y: auto;
-  background-color: #fff;
-  box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.15);
-
-  &::-webkit-scrollbar {
-    width: 5px;
-    border-radius: 25px;
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-gray);
-    border-radius: 4px;
-  }
-`;
 const CartegoryWrapper = styled.div`
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
   margin: 1rem 0;
+`;
+const CategoryButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  padding: 0.7rem;
+  font-size: 25px;
+  color: #5d5d5d;
+  transition: all 0.3s ease;
+  &:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  }
+  &:active {
+    box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+const List = styled.ul`
+  max-height: 55vh;
+  overflow-y: auto;
+  padding: 1rem;
 `;

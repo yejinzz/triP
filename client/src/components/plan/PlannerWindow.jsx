@@ -6,45 +6,64 @@ import { getDateFormat } from "@/utils/getFormatDate";
 // import TripSchedule from "./schedule/TripSchedule";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
-import ScheduleCard from "./ScheduleCard";
+import ScheduleList from "./ScheduleList";
+import { instance } from "../../api/instance";
+
 // import Button from "../atom/button/Button";
 // import DateRangePicker from "../common/DateRangePicker";
 
 const PlannerWindow = ({ menuView, setMenuView }) => {
-  const modalOpen = useSelector((state) => state.modal.isOpen);
+  // const modalOpen = useSelector((state) => state.modal.isOpen);
   const startDate = useSelector((state) => state.schedule.startDate);
   const endDate = useSelector((state) => state.schedule.endDate);
   const destination = useSelector((state) => state.place.destination);
+  const schedules = useSelector((state) => state.schedule.schedules);
 
   const dayDiff = dayjs(endDate).diff(dayjs(startDate), "day") + 1;
+
+  // console.log(destination);
+  // console.log(schedules);
+  const handleSavePlan = () => {
+    instance
+      .post("/api/plan/create", {
+        startDate: startDate,
+        endDate: endDate,
+        destination: destination,
+        schedules: schedules,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <PlannerWrapper menuView={menuView}>
-        {!modalOpen && (
-          <PlannerContent>
-            <PlanInfoCard destination={destination}>
-              <div className="card_background" />
-              <div className="plan_info">
-                {/* <h1>Day {isSelectedDay}</h1> */}
-                <h2 className="region_name">{destination.regionName}</h2>
-                {startDate && endDate && (
-                  <p className="selected_period">{`${getDateFormat(
-                    startDate,
-                    "korean"
-                  )} - ${getDateFormat(endDate, "korean")}`}</p>
-                )}
-              </div>
-            </PlanInfoCard>
-            {/* <div className="total_period">{`${dayDiff} Days`}</div> */}
-            <PlanDetail>
-              <PlanTabMenu dayDiff={dayDiff} />
-              <div className="info">
-                <EditButton>일정 편집하기</EditButton>
-                <ScheduleCard />
-              </div>
-            </PlanDetail>
-          </PlannerContent>
-        )}
+        <PlannerContent>
+          <PlanInfoCard destination={destination}>
+            <div className="card_background" />
+            <div className="plan_info">
+              {/* <h1>Day {isSelectedDay}</h1> */}
+              <h2 className="region_name">{destination.regionName}</h2>
+              {startDate && endDate && (
+                <p className="selected_period">{`${getDateFormat(
+                  startDate,
+                  "korean"
+                )} - ${getDateFormat(endDate, "korean")}`}</p>
+              )}
+            </div>
+          </PlanInfoCard>
+          {/* <div className="total_period">{`${dayDiff} Days`}</div> */}
+          <PlanDetail>
+            <PlanTabMenu dayDiff={dayDiff} savePlan={handleSavePlan} />
+            {/* <div className="info"> */}
+
+            <ScheduleList />
+            {/* </div> */}
+          </PlanDetail>
+        </PlannerContent>
       </PlannerWrapper>
       <ToggleBtn menuView={menuView} setMenuView={setMenuView} />
     </>
@@ -75,6 +94,7 @@ const ToggleBtn = ({ menuView, setMenuView }) => {
 
 const PlannerWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 450px;
   height: calc(100vh - 80px);
   background-color: var(--color-bg-100);
@@ -90,28 +110,25 @@ const PlannerWrapper = styled.div`
   }
 `;
 
-const EditButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e2e2e2;
-  padding: 0.7rem;
-  border-radius: 10px;
-`;
 const PlanDetail = styled.div`
-  display: flex;
+  /* display: flex;
+  justify-content: space-between; */
+  /*flex-direction: row; */
+  display: grid;
+  grid-template-columns: 0.5fr 3fr;
   height: calc(100% - 200px);
   gap: 2rem;
   padding: 1rem;
   .info {
-    width: 100%;
+    /* width: 100%; */
+    /* max-width: 100%; */
   }
 `;
 const PlannerContent = styled.div`
   flex: 1;
 `;
 const PlanInfoCard = styled.div`
-  position: relative;
+  max-width: 450px;
 
   .card_background {
     background-image: ${({ destination }) => `url(${destination.regionImg})`};

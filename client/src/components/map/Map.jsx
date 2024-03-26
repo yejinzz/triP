@@ -1,11 +1,27 @@
-// import { useState } from "react";
-import { Map as KakaoMap, MapMarker, Polyline } from "react-kakao-maps-sdk";
-import { useSelector } from "react-redux";
+import {
+  CustomOverlayMap,
+  Map as KakaoMap,
+  MapMarker,
+  Polyline,
+} from "react-kakao-maps-sdk";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
+import OverlayModal from "./OverlayModal";
+import { setMapCenter } from "../../store/slice/mapSlice";
+import useSelectedPlace from "../../hooks/useSelectedPlace";
 
-const Map = ({ menuView, mapLevel, mapCenter, setMapCenter, result }) => {
+const Map = ({ menuView, result }) => {
+  const dispatch = useDispatch();
   const selectedDay = useSelector((state) => state.schedule.selectedDay);
-
+  const modalOpen = useSelector((state) => state.modal.isOpen);
+  const mapCenter = useSelector((state) => state.map.mapCenter);
+  const mapLevel = useSelector((state) => state.map.mapLevel);
+  const selectedPlace = useSelector((state) => state.place.selectedPlace);
+  const handleClickPlace = useSelectedPlace();
+  // const handleClickPlace = (marker) => {
+  //   // 선택된 장소 정보를 업데이트합니다.
+  //   useSelectedPlace(marker);
+  // };
   // const { kakao } = window;
   // const [search, setSearch] = useState([]);
 
@@ -74,52 +90,69 @@ const Map = ({ menuView, mapLevel, mapCenter, setMapCenter, result }) => {
   let linePath = [];
   const schedules = useSelector((state) => state.schedule.schedules);
   console.log(schedules);
+  // console.log(isOpen);
+
   return (
     <StyledMap
-      center={mapCenter.center}
+      center={mapCenter}
       isPanto={true}
       level={mapLevel}
       menuView={menuView}
       onCenterChanged={(map) =>
-        setMapCenter((prev) => ({
-          ...prev,
-          center: {
+        dispatch(
+          setMapCenter({
             lat: map.getCenter().getLat(),
             lng: map.getCenter().getLng(),
-          },
-          // isLoading: false,
-        }))
+          })
+        )
       }
     >
-      {result.map((marker) => (
-        <MapMarker
-          key={`marker-${marker.placeInfo.name}-${marker.placeInfo.coords.lat},${marker.placeInfo.coords.lng}`}
-          position={{
-            lat: marker.placeInfo.coords.lat,
-            lng: marker.placeInfo.coords.lng,
-          }}
-          // onClick={() => setInfo(marker)}
-        />
-      ))}
+      {Object.keys(schedules).length === 0 &&
+        schedules.constructor === Object &&
+        result.map((marker) => (
+          <>
+            <MapMarker
+              key={`marker-${marker.title}-${marker.mapy},${marker.mapx}`}
+              position={{
+                lat: marker.mapy,
+                lng: marker.mapx,
+              }}
+              clickable={true}
+              onClick={() => handleClickPlace(marker)}
+            />
+          </>
+        ))}
+
       {schedules[selectedDay]?.map((marker) => (
         <MapMarker
-          key={`marker-${marker.placeInfo.name}-${marker.placeInfo.coords.lat},${marker.placeInfo.coords.lng}`}
+          key={`marker-${marker.title}-${marker.mapy},${marker.mapx}`}
           position={{
-            lat: marker.placeInfo.coords.lat,
-            lng: marker.placeInfo.coords.lng,
+            lat: marker.mapy,
+            lng: marker.mapx,
           }}
-          // onClick={() => setInfo(marker)}
+          onClick={() => {
+            handleClickPlace(marker);
+          }}
         />
       ))}
+
+      {modalOpen && (
+        <CustomOverlayMap
+          position={{ lat: selectedPlace.mapy, lng: selectedPlace.mapx }}
+          yAnchor={1}
+        >
+          <OverlayModal markerInfo={selectedPlace} />
+        </CustomOverlayMap>
+      )}
       {schedules[selectedDay]?.map((schedule, dayNumber) => {
-        console.log(schedule.placeInfo.coords.lat);
+        console.log(schedule.mapy);
         console.log(linePath);
         // let linePath = [];
 
         // schedule 객체에서 lat와 lng를 추출하여 linePath 배열에 추가
         linePath.push({
-          lat: schedule.placeInfo.coords.lat,
-          lng: schedule.placeInfo.coords.lng,
+          lat: schedule.mapy,
+          lng: schedule.mapx,
         });
         return (
           <Polyline

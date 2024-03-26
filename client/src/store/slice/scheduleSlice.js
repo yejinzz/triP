@@ -21,12 +21,13 @@ export const scheduleSlice = createSlice({
       state.selectedDay = action.payload;
     },
     setSchedule: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       const { day, schedule } = action.payload;
       if (!state.schedules[day]) {
         state.schedules[day] = [];
       }
-      state.schedules[day].push(schedule);
+      // state.schedules[day].push(schedule);
+      state.schedules[day] = [...state.schedules[day], schedule];
     },
   },
 });

@@ -7,12 +7,7 @@ import styled from "styled-components";
 import axios from "axios";
 // import Button from "../atom/button/Button";
 
-const SearchBar = ({
-  searchRef,
-  setMapCenter,
-  setMapLevel,
-  setIsSearchModalOpen,
-}) => {
+const SearchBar = ({ setMapCenter, setMapLevel, setIsSearchModalOpen }) => {
   const [search, onChange, resetForm] = useInputs({ keyword: "" });
   const [keywordList, setKeywordList] = useState([]);
 
@@ -73,12 +68,11 @@ const SearchBar = ({
     <>
       <InputBox>
         <input
-          ref={searchRef}
           name="keyword"
+          aria-label="장소 검색"
           onChange={onChange}
           value={search.keyword}
           onClick={() => setIsSearchModalOpen(true)}
-          // onBlur={() => setIsSearchModalOpen(false)}
         />
         {search.keyword && <MdClose onClick={() => resetForm()} />}
         {/* <MdOutlineSearch size={20} /> */}

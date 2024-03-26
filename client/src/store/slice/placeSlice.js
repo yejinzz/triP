@@ -10,6 +10,8 @@ const initialState = {
     regionName: null,
     regionImg: null,
   },
+  selectedPlace: null,
+  // const [selectedPlace, setSelectedPlace] = useState(null);
 };
 
 export const placeSlice = createSlice({
@@ -19,9 +21,12 @@ export const placeSlice = createSlice({
     setDestination: (state, action) => {
       state.destination = { ...state.destination, ...action.payload };
     },
+    setSelectedPlace: (state, action) => {
+      state.selectedPlace = action.payload;
+    },
   },
 });
 
-export const { setDestination } = placeSlice.actions;
+export const { setDestination, setSelectedPlace } = placeSlice.actions;
 
 export default placeSlice.reducer;
