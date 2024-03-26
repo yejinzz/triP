@@ -45,7 +45,15 @@ const GlobalStyles = createGlobalStyle`
     input,textarea:focus {
         outline: none;
     }
-
+    ::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 25px;
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray);
+    border-radius: 4px;
+  }
     /* logo */
     .logo_style {
     color:#fff;
