@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import Logo from "@/components/atom/Logo";
 import AccountDropdown from "./AccountDropdown";
@@ -12,6 +12,8 @@ const Header = () => {
   const location = useLocation();
   const path = location.pathname;
   const isLogin = localStorage.getItem("isLogin");
+  const navigate = useNavigate();
+
   useEffect(() => {
     if ((path === "/mypage" || path === "/") && scrollPosition < 500) {
       setHeaderColor("transparent");
@@ -28,7 +30,13 @@ const Header = () => {
         {isLogin ? (
           <AccountDropdown path={path} />
         ) : (
-          <Button width={"100px"} variant="outline">
+          <Button
+            width={"100px"}
+            variant="outline"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
             로그인
           </Button>
         )}
