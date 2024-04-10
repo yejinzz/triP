@@ -10,7 +10,7 @@ export const getDateFormat = (date, format) => {
       dateString = dayjs(date).format("YYYY년 M월 D일 (ddd)");
       break;
     case "dot":
-      dateString = dayjs(date).format("YYYY.MM.DD. ddd");
+      dateString = dayjs(date).format("YYYY.MM.DD (ddd)");
       break;
     case "dash":
       dateString = dayjs(date).format("YYYY-MM-DD ddd");

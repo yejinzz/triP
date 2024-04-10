@@ -1,49 +1,32 @@
 import styled from "styled-components";
-import { IoIosAddCircleOutline } from "@react-icons/all-files/io/IoIosAddCircleOutline";
-import { IoIosRemoveCircleOutline } from "@react-icons/all-files/io/IoIosRemoveCircleOutline";
-import { IoReorderThreeOutline } from "@react-icons/all-files/io5/IoReorderThreeOutline";
 import useSelectedPlace from "@/hooks/useSelectedPlace";
-import { useDispatch, useSelector } from "react-redux";
-import { setSchedule } from "@/store/slice/scheduleSlice";
+import { getPlaceTypeLabel } from "@/utils/getPlaceTypeLabel";
+import PlaceAddBtn from "@/components/common/place_parts/PlaceAddBtn";
+import PlaceItemImg from "@/components/common/place_parts/PlaceItemImg";
 
-const PlaceItem = ({ place, isEdit, isAddEnabled }) => {
-  const dispatch = useDispatch();
-  const selectedDay = useSelector((state) => state.schedule.selectedDay);
-  const handleClickPlace = useSelectedPlace();
-
-  const getPlaceTypeLabel = () => {
-    switch (place.contenttypeid) {
-      case "12":
-        return "관광명소";
-      case "39":
-        return "음식점";
-      case "32":
-        return "숙박";
-      default:
-        return null;
-    }
-  };
-
-  const addSchedule = (schedule) => {
-    const day = selectedDay;
-    handleClickPlace(schedule);
-    dispatch(setSchedule({ day, schedule }));
-  };
+const PlaceItem = ({ place, openDialog }) => {
+  const handleClickPlace = useSelectedPlace(); // 해당하는 장소 정보 제공 및 좌표 이동
+  console.log(place.firstimage);
   return (
-    <PlaceItemWrapper>
-      {isEdit && <RemoveIcon />}
-      <PlaceInfoBox onClick={() => handleClickPlace(place)}>
-        <img src={place.firstimage} alt="place_img" />
-        <div className="place_info">
-          <span>{getPlaceTypeLabel()}</span>
-          <p className="place_name">{place.title}</p>
+    <>
+      <PlaceItemWrapper>
+        <PlaceInfoBox onClick={() => handleClickPlace(place)}>
+          {/* {place.firstimage ? (
+            <img src={place.firstimage} alt="place_img" />
+          ) : (
+            <NoImage />
+          )} */}
+          <PlaceItemImg placeImg={place.firstimage} />
+          <div className="place_info">
+            <span>{getPlaceTypeLabel(place)}</span>
+            <p className="place_name">{place.title}</p>
 
-          <p className="place_address">{`${place.addr1} ${place.addr2}`}</p>
-        </div>
-      </PlaceInfoBox>
-      {isAddEnabled && <AddIcon onClick={() => addSchedule(place)} />}
-      {isEdit && <ChangeListIcon />}
-    </PlaceItemWrapper>
+            <p className="place_address">{`${place.addr1} ${place.addr2}`}</p>
+          </div>
+        </PlaceInfoBox>
+        <PlaceAddBtn place={place} openDialog={openDialog} />
+      </PlaceItemWrapper>
+    </>
   );
 };
 
@@ -66,6 +49,10 @@ const PlaceInfoBox = styled.div`
     height: 70px;
     object-fit: cover;
     border-radius: 10px;
+  }
+  & > svg {
+    width: 70px;
+    height: 70px;
   }
   .place_info {
     height: 70px;
@@ -93,19 +80,4 @@ const PlaceInfoBox = styled.div`
       text-overflow: ellipsis;
     }
   }
-`;
-
-const AddIcon = styled(IoIosAddCircleOutline)`
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--color-blue);
-`;
-const RemoveIcon = styled(IoIosRemoveCircleOutline)`
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--color-red);
-`;
-const ChangeListIcon = styled(IoReorderThreeOutline)`
-  font-size: 1.5rem;
-  cursor: pointer;
 `;

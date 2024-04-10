@@ -12,10 +12,7 @@ export default Button;
 
 const VARIANT = {
   default: css`
-    background-color: ${(props) =>
-      props.selected ? "var(--color-primary)" : null};
-
-    color: ${(props) => (props.selected ? "#fff" : null)};
+    background-color: var(--color-bg-100);
     box-shadow: -3px -3px 10px rgba(255, 255, 255, 0.7),
       5px 5px 10px rgba(0, 0, 0, 0.2);
 
@@ -30,8 +27,11 @@ const VARIANT = {
   `,
   primary: css`
     color: #fff;
+    background-color: ${(props) =>
+      props.disabled ? "var(--color-gray)" : "var(--color-primary)"};
     background-color: var(--color-primary);
     box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.15);
+
     &:hover {
       box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
     }
@@ -42,12 +42,9 @@ const VARIANT = {
   outline: css`
     background-color: ${(props) =>
       props.selected ? "var(--color-primary-80)" : "transparent"};
-
     color: ${(props) => (props.selected ? "#fff" : "var(--color-primary)")};
-    border: 1px solid var(--color-primary);
-    /* border: ${(props) =>
-      props.selected ? null : "1px solid var(--color-primary)"}; */
-    /* box-shadow: none; */
+    border: ${(props) =>
+      props.selected ? null : "1px solid var(--color-primary)"};
     &:hover {
       border: 1px solid var(--color-primary-50);
       box-shadow: none;
@@ -60,13 +57,16 @@ const VARIANT = {
 
 const S_Button = styled.button`
   ${(props) => props.variant && VARIANT[props.variant]};
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-radius: ${(props) => (props.radius ? props.radius : "10px")};
-  width: 100%;
+  width: ${(props) => (props.width ? props.width : "100%")};
   /* min-width: max-content; */
+  white-space: nowrap;
   transition: all 0.2s ease;
   text-transform: uppercase;
   padding: 0.7rem;
+  &:disabled {
+    background-color: #ccc;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
 `;

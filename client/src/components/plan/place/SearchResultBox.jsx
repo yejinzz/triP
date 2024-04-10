@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const SearchResultBox = ({ children, totalNum, isSelected }) => {
+const SearchResultBox = ({ children, totalNum }) => {
   return (
     <SearchResultContainer>
       <div className="search__total">
-        <span>{isSelected}</span>검색 결과
+        검색 결과
         <span>{totalNum}</span>건
       </div>
       {children}
@@ -30,9 +30,8 @@ const SearchResultContainer = styled.div`
   }
   .search_box {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100%;
+    justify-content: center;
     min-height: 150px;
   }
   .search__total {

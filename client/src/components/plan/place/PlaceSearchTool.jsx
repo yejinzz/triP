@@ -1,106 +1,103 @@
 import { useRef, useState } from "react";
 import SearchBar from "@/components/map/SearchBar";
-import PlaceItem from "./PlaceItem";
+import PlaceItem from "@/components/plan/place/PlaceItem.jsx";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MAP_CATEGORIES } from "@/datas/categories";
 import SearchResultBox from "./SearchResultBox";
 import Loading from "@/components/common/Loding";
 import useCloseModal from "@/hooks/useCloseModal";
-import { instance } from "@/api/instance";
+import Confirm from "@/components/common/dialog/Confirm";
+import { getPlaceByCategory } from "@/api/api";
+import { setSearchPlace } from "@/store/slice/placeSlice";
+import useOpenDialog from "@/hooks/useOpenDialog";
 
-const PlaceSearchTool = ({ setResult, result }) => {
-  const destination = useSelector((state) => state.place.destination);
+const PlaceSearchTool = () => {
+  const dispatch = useDispatch();
+  const [isOpenDialog, openDialog, closeDialog] = useOpenDialog();
+
+  const destination = useSelector((state) => state.schedule.destination);
+  const searchResult = useSelector((state) => state.place.searchResult);
 
   const [loading, setLoading] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isSelected, setIsSelected] = useState(null);
 
-  // const searchRef = useRef(null);
   const searchResultRef = useRef(null);
 
   const searchByKeyword = (category) => {
     setLoading(true);
 
-    instance
-      .get(
-        `/api/places?regionCode=${destination.regionCode}&placeType=${category.typeId}`
-      )
-      .then((res) => {
-        console.log(res.data);
-        setResult(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    getPlaceByCategory(category.typeId, destination.regionCode).then((res) => {
+      dispatch(setSearchPlace(res.data.response.body.items.item));
+      setLoading(false);
+    });
 
     setIsSelected(category.name);
     setIsSearchModalOpen(true);
-    // TourInstance.get(
-    //   `/areaBasedList1?serviceKey=${
-    //     import.meta.env.VITE_TOUR_API_KEY
-    //   }&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=R&contentTypeId=${
-    //     category.typeId
-    //   }&areaCode=${destination.regionCode}`
-    // ).then((res) => {
-    //   setLoading(false);
-    //   setResult(res.data.response.body.items.item);
-    //   console.log(res.data.response.body.items.item);
-    // });
   };
-  useCloseModal(searchResultRef, () => setIsSearchModalOpen(false));
 
+  useCloseModal(searchResultRef, () => setIsSearchModalOpen(false));
   return (
-    <SearchToolContainer ref={searchResultRef}>
-      <SearchBar
-        // setMapCenter={setMapCenter}
-        // setMapLevel={setMapLevel}
-        setIsSearchModalOpen={setIsSearchModalOpen}
-        // searchRef={searchRef}
-      />
-      <CartegoryWrapper>
-        {MAP_CATEGORIES.map((category) => {
-          return (
-            <CategoryButton
-              aria-label={`${category.name} 키워드 버튼`}
-              selected={isSelected === category.name}
-              key={category.id}
-              onClick={() => {
-                searchByKeyword(category);
-              }}
-            >
-              {category.icon}
-            </CategoryButton>
-          );
-        })}
-      </CartegoryWrapper>
-      {isSearchModalOpen && (
-        <SearchResultBox totalNum={result.length} isSelected={isSelected}>
-          {loading ? (
-            <div className="search_box">
-              <Loading />
-            </div>
-          ) : (
-            <>
-              {result.length !== 0 ? (
-                <List>
-                  {result.map((place, idx) => (
-                    <li key={idx}>
-                      <PlaceItem place={place} isAddEnabled={true} />
-                    </li>
-                  ))}
-                </List>
-              ) : (
-                <div className="search_box">
-                  <p>검색결과가 없습니다.</p>
-                </div>
-              )}
-            </>
-          )}
-        </SearchResultBox>
+    <>
+      {isOpenDialog && (
+        <Confirm
+          title="알림"
+          content="일정은 하루에 14개까지 추가 가능합니다."
+          primaryLabel="확인"
+          onClickPrimaryButton={() => closeDialog()}
+        />
       )}
-    </SearchToolContainer>
+      <SearchToolContainer ref={searchResultRef}>
+        <SearchBar
+          setIsSearchModalOpen={setIsSearchModalOpen}
+          setLoading={setLoading}
+        />
+        <CartegoryWrapper>
+          {MAP_CATEGORIES.map((category) => {
+            return (
+              <CategoryButton
+                aria-label={`${category.name} 키워드 버튼`}
+                selected={isSelected === category.name}
+                key={category.id}
+                onClick={() => {
+                  searchByKeyword(category);
+                }}
+              >
+                {category.icon}
+              </CategoryButton>
+            );
+          })}
+        </CartegoryWrapper>
+        {isSearchModalOpen && (
+          <SearchResultBox totalNum={searchResult.length}>
+            {loading ? (
+              <div className="search_box">
+                <Loading />
+              </div>
+            ) : (
+              <>
+                {searchResult.length !== 0 ? (
+                  <PlaceList>
+                    {searchResult.map((place, idx) => {
+                      return (
+                        <li key={idx}>
+                          <PlaceItem place={place} openDialog={openDialog} />
+                        </li>
+                      );
+                    })}
+                  </PlaceList>
+                ) : (
+                  <div className="search_box">
+                    <p>검색결과가 없습니다.</p>
+                  </div>
+                )}
+              </>
+            )}
+          </SearchResultBox>
+        )}
+      </SearchToolContainer>
+    </>
   );
 };
 
@@ -111,7 +108,7 @@ const SearchToolContainer = styled.div`
   right: 10px;
   top: 10px;
   z-index: 10;
-  width: 350px;
+  width: 300px;
 `;
 
 const CartegoryWrapper = styled.div`
@@ -129,6 +126,7 @@ const CategoryButton = styled.button`
   font-size: 25px;
   color: #5d5d5d;
   transition: all 0.3s ease;
+  background-color: #f1f1f1;
   &:hover {
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
   }
@@ -137,8 +135,9 @@ const CategoryButton = styled.button`
   }
 `;
 
-const List = styled.ul`
+const PlaceList = styled.ul`
   max-height: 55vh;
   overflow-y: auto;
-  padding: 1rem;
+  padding: 0 1rem;
+  padding-bottom: 1rem;
 `;

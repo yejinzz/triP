@@ -2,19 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Button from "../atom/button/Button";
 import { setSelectDay } from "@/store/slice/scheduleSlice";
-import { setCloseModal } from "@/store/slice/modalSlice";
+import { useParams } from "react-router-dom";
+// import { setCloseModal } from "@/store/slice/modalSlice";
 
-const PlanTabMenu = ({ dayDiff, savePlan }) => {
+const PlanTabMenu = ({ dayDiff, savePlan, updatePlan }) => {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  // const modalOpen = useSelector((state) => state.modal.isOpen);
   const selectedDay = useSelector((state) => state.schedule.selectedDay);
-  // const selectedDay = useSelector((state) => state.schedule.selectedDay);
 
   const handleClickButton = (day) => {
     dispatch(setSelectDay(`day ${day}`));
-    dispatch(setCloseModal());
   };
-  console.log(dayDiff);
 
   return (
     <TabMenuWrapper>
@@ -36,11 +34,15 @@ const PlanTabMenu = ({ dayDiff, savePlan }) => {
               </li>
             ))}
       </DayLists>
-      {/* <div> */}
-      <Button variant="primary" radius="10px" onClick={() => savePlan()}>
-        저장
-      </Button>
-      {/* </div> */}
+      {!id ? (
+        <Button variant="primary" radius="10px" onClick={() => savePlan()}>
+          저장
+        </Button>
+      ) : (
+        <Button variant="primary" radius="10px" onClick={() => updatePlan()}>
+          수정
+        </Button>
+      )}
     </TabMenuWrapper>
   );
 };
@@ -54,10 +56,8 @@ const TabMenuWrapper = styled.div`
   align-items: center;
   width: 80px;
   height: 100%;
-  /* padding: 1rem; */
-  /* overflow: auto; */
+  overflow: auto;
   & > button {
-    /* width: 100%; */
     margin-top: 30px;
   }
 `;
@@ -73,18 +73,5 @@ const DayLists = styled.ul`
   scrollbar-width: none;
   & > li {
     width: 100%;
-    /* padding: 0.5rem; */
   }
 `;
-
-// const MenuBtn = styled.button`
-//   padding: 0.5rem;
-//   /* border-radius: 10px; */
-//   border-left: ${(props) =>
-//     props.isSelectedDay === props.key + 1 && "7px solid var(--color-primary)"};
-//   /* color: ${(props) => props.content === props.name && "#fff"}; */
-//   &:hover {
-//     background-color: ${(props) =>
-//       props.content !== props.name && "var(--color-primary-20)"};
-//   }
-// `;

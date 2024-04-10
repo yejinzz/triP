@@ -3,49 +3,62 @@ import { MdKeyboardArrowLeft } from "@react-icons/all-files/md/MdKeyboardArrowLe
 import { MdKeyboardArrowRight } from "@react-icons/all-files/md/MdKeyboardArrowRight";
 import PlanTabMenu from "./PlanTabMenu";
 import { getDateFormat } from "@/utils/getFormatDate";
-// import TripSchedule from "./schedule/TripSchedule";
 import { useSelector } from "react-redux";
-import dayjs from "dayjs";
 import ScheduleList from "./ScheduleList";
-import { instance } from "../../api/instance";
-
-// import Button from "../atom/button/Button";
-// import DateRangePicker from "../common/DateRangePicker";
+import { instance } from "@/api/instance";
+import { getDayDiff } from "@/utils/getDayDiff";
+import useOpenDialog from "@/hooks/useOpenDialog";
+import Confirm from "../common/dialog/Confirm";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PlannerWindow = ({ menuView, setMenuView }) => {
-  // const modalOpen = useSelector((state) => state.modal.isOpen);
+  const { id } = useParams();
   const startDate = useSelector((state) => state.schedule.startDate);
   const endDate = useSelector((state) => state.schedule.endDate);
-  const destination = useSelector((state) => state.place.destination);
+  const destination = useSelector((state) => state.schedule.destination);
   const schedules = useSelector((state) => state.schedule.schedules);
+  const dayDiff = getDayDiff(startDate, endDate);
+  const navigate = useNavigate();
 
-  const dayDiff = dayjs(endDate).diff(dayjs(startDate), "day") + 1;
+  const [isOpenDialog, openDialog, closeDialog] = useOpenDialog();
 
-  // console.log(destination);
-  // console.log(schedules);
   const handleSavePlan = () => {
     instance
-      .post("/api/plan/create", {
+      .post("/api/plan", {
         startDate: startDate,
         endDate: endDate,
         destination: destination,
         schedules: schedules,
       })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
+      .then(() => {
+        openDialog();
       });
   };
+
+  const handleUpdatePlan = () => {
+    instance.patch(`/api/plan/${id}`, { schedules: schedules }).then(() => {
+      return navigate("/mypage");
+    });
+  };
+
   return (
     <>
+      {isOpenDialog && (
+        <Confirm
+          title="즐거운 여행 되세요!"
+          content="일정이 성공적으로 저장되었습니다."
+          primaryLabel="일정 목록 가기"
+          onClickPrimaryButton={() => {
+            closeDialog();
+            return navigate("/mypage");
+          }}
+        />
+      )}
       <PlannerWrapper menuView={menuView}>
         <PlannerContent>
           <PlanInfoCard destination={destination}>
             <div className="card_background" />
             <div className="plan_info">
-              {/* <h1>Day {isSelectedDay}</h1> */}
               <h2 className="region_name">{destination.regionName}</h2>
               {startDate && endDate && (
                 <p className="selected_period">{`${getDateFormat(
@@ -55,13 +68,13 @@ const PlannerWindow = ({ menuView, setMenuView }) => {
               )}
             </div>
           </PlanInfoCard>
-          {/* <div className="total_period">{`${dayDiff} Days`}</div> */}
           <PlanDetail>
-            <PlanTabMenu dayDiff={dayDiff} savePlan={handleSavePlan} />
-            {/* <div className="info"> */}
-
+            <PlanTabMenu
+              dayDiff={dayDiff}
+              savePlan={handleSavePlan}
+              updatePlan={handleUpdatePlan}
+            />
             <ScheduleList />
-            {/* </div> */}
           </PlanDetail>
         </PlannerContent>
       </PlannerWrapper>
@@ -97,7 +110,7 @@ const PlannerWrapper = styled.div`
   justify-content: space-between;
   width: 450px;
   height: calc(100vh - 80px);
-  background-color: var(--color-bg-100);
+  background-color: #fff;
   position: absolute;
   top: 0;
   left: 0;
@@ -126,6 +139,7 @@ const PlanDetail = styled.div`
 `;
 const PlannerContent = styled.div`
   flex: 1;
+  -ms-flex: 1;
 `;
 const PlanInfoCard = styled.div`
   max-width: 450px;
@@ -166,7 +180,7 @@ const PlanInfoCard = styled.div`
 const ToggleWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: var(--color-bg-100);
+  background-color: #fff;
   box-shadow: 0 2px 3px 2px rgba(0, 0, 0, 0.15);
   width: 24px;
   height: 48px;

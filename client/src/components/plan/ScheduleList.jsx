@@ -1,28 +1,26 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { useSelector } from "react-redux";
-import PlaceItem from "./place/PlaceItem";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { IoIosRemoveCircleOutline } from "@react-icons/all-files/io/IoIosRemoveCircleOutline";
+import { IoReorderThreeOutline } from "@react-icons/all-files/io5/IoReorderThreeOutline";
+import useScheduleEditor from "@/hooks/useEditSchedule";
+import ScheduleItem from "./ScheduleItem";
 
 const ScheduleList = () => {
+  // const dispatch = useDispatch();
   const schedules = useSelector((state) => state.schedule.schedules);
   const selectedDay = useSelector((state) => state.schedule.selectedDay);
-  const [isEdit, setIsEdit] = useState(false);
+  const isEdit = useSelector((state) => state.editedSchedule.isEdit);
+  const editedSchedules = useSelector(
+    (state) => state.editedSchedule.editedSchedules
+  );
 
-  const handleChange = (result) => {
-    if (!result.destination) return;
-    console.log(result);
-    const items = [...schedules[selectedDay]];
-    console.log(items);
-    // const [reorderedItem] = items.splice(result.source.index, 1);
-    // items.splice(result.destination.index, 0, reorderedItem);
-  };
-  const handleEdit = (result) => {
-    if (!result.destination) return setIsEdit(!isEdit);
-  };
+  const { handleChangeList, handleRemoveSchedule, handleEditMode } =
+    useScheduleEditor();
+
   return (
     <Container>
-      <EditButton isEdit={isEdit} onClick={() => setIsEdit(!isEdit)}>
+      <EditButton isEdit={isEdit} onClick={() => handleEditMode(schedules)}>
         {!isEdit ? "일정 편집하기" : "편집 완료하기"}
       </EditButton>
       <ListContainer>
@@ -31,13 +29,13 @@ const ScheduleList = () => {
             return (
               <ScheduleContainer key={idx}>
                 <CircleMarker>{idx + 1}</CircleMarker>
-                <PlaceItem place={place} />
+                <ScheduleItem place={place} />
               </ScheduleContainer>
             );
           })
         ) : (
           <>
-            <DragDropContext onDragEnd={handleChange}>
+            <DragDropContext onDragEnd={handleChangeList}>
               <Droppable droppableId="schedules">
                 {(provided) => (
                   <ul
@@ -45,15 +43,20 @@ const ScheduleList = () => {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    {schedules[selectedDay]?.map((place, idx) => (
+                    {editedSchedules[selectedDay]?.map((place, idx) => (
                       <Draggable key={idx} draggableId={`${idx}`} index={idx}>
                         {(provided) => (
                           <li
+                            className="schedule"
                             ref={provided.innerRef}
                             {...provided.dragHandleProps}
                             {...provided.draggableProps}
                           >
-                            <PlaceItem place={place} isEdit={isEdit} />
+                            <RemoveIcon
+                              onClick={() => handleRemoveSchedule(idx)}
+                            />
+                            <ScheduleItem place={place} />
+                            <ChangeListIcon />
                           </li>
                         )}
                       </Draggable>
@@ -82,11 +85,15 @@ const EditButton = styled.button`
 `;
 
 const Container = styled.div`
+  height: 100%;
   overflow: auto;
 `;
 const ListContainer = styled.div`
-  height: calc(100% - 2.5rem);
-  overflow-y: auto;
+  .schedule {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 const CircleMarker = styled.div`
@@ -119,4 +126,13 @@ const ScheduleContainer = styled.div`
     margin: 10px;
     height: 100%;
   }
+`;
+const RemoveIcon = styled(IoIosRemoveCircleOutline)`
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--color-red);
+`;
+const ChangeListIcon = styled(IoReorderThreeOutline)`
+  font-size: 1.2rem;
+  cursor: pointer;
 `;

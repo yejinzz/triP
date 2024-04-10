@@ -2,8 +2,13 @@ import { MdAdd } from "@react-icons/all-files/md/MdAdd";
 import { MdRemove } from "@react-icons/all-files/md/MdRemove";
 import Button from "../atom/button/Button";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { setMapLevel } from "../../store/slice/mapSlice";
 
-const ZoomBtn = ({ mapLevel, setMapLevel }) => {
+const ZoomBtn = () => {
+  const dispatch = useDispatch();
+  const mapLevel = useSelector((state) => state.map.mapLevel);
+
   return (
     <ZoomBox>
       <Button
@@ -12,7 +17,7 @@ const ZoomBtn = ({ mapLevel, setMapLevel }) => {
         aria-label="지도 확대 버튼"
         radius="10px"
         onClick={() => {
-          setMapLevel(mapLevel > 1 ? mapLevel - 1 : 1);
+          dispatch(setMapLevel(mapLevel > 1 ? mapLevel - 1 : 1));
         }}
       >
         <MdAdd size={20} />
@@ -22,7 +27,7 @@ const ZoomBtn = ({ mapLevel, setMapLevel }) => {
         aria-label="지도 축소 버튼"
         radius="10px"
         onClick={() => {
-          setMapLevel(mapLevel < 14 ? mapLevel + 1 : 14);
+          dispatch(setMapLevel(mapLevel < 14 ? mapLevel + 1 : 14));
         }}
       >
         <MdRemove size={20} />

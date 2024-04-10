@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ZoomBtn from "@/components/map/MapZoomBtn";
 import Map from "@/components/map/Map";
 import styled from "styled-components";
@@ -10,17 +10,20 @@ import RegionCard from "@/components/common/RegionCard";
 import { REGIONS_INFO } from "@/datas/regions";
 import TripDatePicker from "@/components/plan/date/TripDatePicker";
 import PlaceSearchTool from "@/components/plan/place/PlaceSearchTool";
-import { setMapCenter } from "../store/slice/mapSlice";
+import { setMapCenter } from "@/store/slice/mapSlice";
+import { useParams } from "react-router-dom";
 
 const PlanMapPage = () => {
+  const { id } = useParams();
+
   const dispatch = useDispatch();
-  const destination = useSelector((state) => state.place.destination);
+  const destination = useSelector((state) => state.schedule.destination);
   const startDate = useSelector((state) => state.schedule.startDate);
   const endDate = useSelector((state) => state.schedule.endDate);
 
-  const [initialModal, setInitialModal] = useState(true);
+  const [initialModal, setInitialModal] = useState(false);
   const [menuView, setMenuView] = useState(false);
-  const [result, setResult] = useState([]);
+  // const [result, setResult] = useState([]);
 
   const handleCreateSchedule = () => {
     if (!(startDate && endDate)) {
@@ -45,27 +48,18 @@ const PlanMapPage = () => {
     }
   };
 
-  // const handleInfoWindow = async (place) => {
-  //   setSelectedPlace(place);
-  //   setMapCenter((prev) => ({
-  //     ...prev,
-  //     center: {
-  //       lat: place.mapy,
-  //       lng: place.mapx,
-  //     },
-  //     // isLoading: false,
-  //   }));
-  //   dispatch(setOpenModal());
-  // };
+  useEffect(() => {
+    setInitialModal(true);
+  }, []);
 
   return (
     <PlanMapContainer>
-      {initialModal && (
+      {!id && initialModal && (
         <Modal>
           <RegionLists>
-            <h1 className="title">🗓️ 여행 날짜를 선택해 주세요.</h1>
+            <h2 className="title">🗓️ 여행 날짜를 선택해 주세요.</h2>
             <TripDatePicker />
-            <h1 className="title">🚐 여행 지역을 선택해 주세요.</h1>
+            <h2 className="title">🚐 여행 지역을 선택해 주세요.</h2>
             <ul>
               {REGIONS_INFO.map((region) => {
                 return (
@@ -82,23 +76,16 @@ const PlanMapPage = () => {
       )}
 
       <PlannerWindow menuView={menuView} setMenuView={setMenuView} />
-      <PlaceSearchTool
-        result={result}
-        setResult={setResult}
-        // setMapCenter={setMapCenter}
-        // handleInfoWindow={handleInfoWindow}
-      />
-      <Map menuView={menuView} result={result} />
-      <ZoomBtn
-      // mapLevel={mapLevel} setMapLevel={setMapLevel}
-      />
+      <PlaceSearchTool />
+      <Map menuView={menuView} />
+      <ZoomBtn />
     </PlanMapContainer>
   );
 };
 
 export default PlanMapPage;
 
-const PlanMapContainer = styled.div`
+const PlanMapContainer = styled.main`
   position: relative;
   width: 100%;
   height: calc(100vh - 80px);

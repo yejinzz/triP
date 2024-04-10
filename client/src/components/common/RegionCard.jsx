@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { setDestination } from "@/store/slice/placeSlice";
+import { setDestination } from "@/store/slice/scheduleSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const RegionCard = ({ regionInfo }) => {
-  const destination = useSelector((state) => state.place.destination);
+  const destination = useSelector((state) => state.schedule.destination);
 
   const dispatch = useDispatch();
   const handleRegionClick = (region) => {
@@ -25,7 +25,7 @@ const RegionCard = ({ regionInfo }) => {
     >
       <img src={regionInfo.imgUrl} alt={regionInfo.name} />
       <div className="region-info">
-        <h1>{regionInfo.nameEng}</h1>
+        <h2>{regionInfo.nameEng}</h2>
         <p>{regionInfo.name}</p>
       </div>
     </RegionList>
@@ -57,7 +57,7 @@ const RegionList = styled.div`
 
   .region-info {
     margin-left: 0.5rem;
-    & > h1 {
+    & > h2 {
       font-family: "Montserrat", sans-serif;
       font-size: 1.5rem;
       letter-spacing: 0;

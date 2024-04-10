@@ -1,21 +1,21 @@
 import styled from "styled-components";
-import logo_black from "../../assets/logo/logo_black.png";
-import logo_white from "../../assets/logo/logo_white.png";
 import { Link } from "react-router-dom";
 
-const Logo = ({ isHome }) => {
+const Logo = ({ path }) => {
   return (
     <Link to="/">
-      {isHome === "/" ? (
-        <LogoImg src={logo_white} alt="logo" />
-      ) : (
-        <LogoImg src={logo_black} alt="logo" />
-      )}
+      <LogoText
+        className="logo_style"
+        path={path === "/" || path === "/mypage"}
+      >
+        triP.
+      </LogoText>
     </Link>
   );
 };
 
 export default Logo;
-const LogoImg = styled.img`
-  width: 60px;
+
+const LogoText = styled.h1`
+  color: ${({ path }) => path && "#fff"};
 `;

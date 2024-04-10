@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const NavBar = ({ isHome }) => {
+const NavBar = ({ path }) => {
   return (
-    <ListContainer isHome={isHome}>
-      {nav.map((el, idx) => {
-        return (
-          <li key={idx}>
-            <Link to={el.endPoint}>{el.name}</Link>
-          </li>
-        );
-      })}
-    </ListContainer>
+    <>
+      <ListContainer path={path === "/" || path === "/mypage"}>
+        {nav.map((el, idx) => {
+          return (
+            <li key={idx}>
+              <Link to={el.endPoint}>{el.name}</Link>
+            </li>
+          );
+        })}
+      </ListContainer>
+    </>
   );
 };
 
@@ -29,7 +31,7 @@ const ListContainer = styled.ul`
   gap: 3rem;
 
   & li {
-    color: ${(props) => (props.isHome === "/" ? "#fff" : null)};
+    color: ${({ path }) => (path ? "#fff" : null)};
     letter-spacing: -1.5px;
     &:hover {
       cursor: pointer;

@@ -1,6 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  destination: {
+    coords: {
+      lat: null,
+      lng: null,
+    },
+    regionCode: null,
+    regionName: null,
+    regionImg: null,
+  },
   startDate: null,
   endDate: null,
   selectedDay: "day 1",
@@ -11,6 +20,9 @@ export const scheduleSlice = createSlice({
   name: "schedule",
   initialState,
   reducers: {
+    setDestination: (state, action) => {
+      state.destination = { ...state.destination, ...action.payload };
+    },
     setStartDate: (state, action) => {
       state.startDate = action.payload;
     },
@@ -21,18 +33,25 @@ export const scheduleSlice = createSlice({
       state.selectedDay = action.payload;
     },
     setSchedule: (state, action) => {
-      // console.log(action.payload);
       const { day, schedule } = action.payload;
       if (!state.schedules[day]) {
         state.schedules[day] = [];
       }
-      // state.schedules[day].push(schedule);
       state.schedules[day] = [...state.schedules[day], schedule];
+    },
+    editSchedule: (state, action) => {
+      state.schedules = { ...state.schedules, ...action.payload };
     },
   },
 });
 
-export const { setStartDate, setEndDate, setSelectDay, setSchedule } =
-  scheduleSlice.actions;
+export const {
+  setDestination,
+  setStartDate,
+  setEndDate,
+  setSelectDay,
+  setSchedule,
+  editSchedule,
+} = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

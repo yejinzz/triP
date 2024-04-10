@@ -15,4 +15,8 @@
 
   --color-red: #d64545;
   --color-blue: #4568dc;
+
+  --shadow-box: 0px 0px 8px rgb(0, 0, 0, 0.2);
+  --shadow-btn-hover: 2px 2px 3px rgba(0, 0, 0, 0.1);
+  --shadow-btn-active: inset 2px 2px 3px rgba(0, 0, 0, 0.1);
 }
