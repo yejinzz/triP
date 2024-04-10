@@ -30,13 +30,20 @@ export const scheduleSlice = createSlice({
       state.endDate = action.payload;
     },
     setSelectDay: (state, action) => {
-      state.selectedDay = action.payload;
+      state.selectedDay = `day ${action.payload}`;
+    },
+    setInitSchedule: (state, action) => {
+      const { dayDiff } = action.payload;
+
+      for (let i = 1; i <= dayDiff; i++) {
+        const dayKey = `day ${i}`;
+        if (!state.schedules[dayKey]) {
+          state.schedules[dayKey] = [];
+        }
+      }
     },
     setSchedule: (state, action) => {
       const { day, schedule } = action.payload;
-      if (!state.schedules[day]) {
-        state.schedules[day] = [];
-      }
       state.schedules[day] = [...state.schedules[day], schedule];
     },
     editSchedule: (state, action) => {
@@ -50,6 +57,7 @@ export const {
   setStartDate,
   setEndDate,
   setSelectDay,
+  setInitSchedule,
   setSchedule,
   editSchedule,
 } = scheduleSlice.actions;

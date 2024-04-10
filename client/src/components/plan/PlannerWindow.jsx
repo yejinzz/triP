@@ -13,12 +13,13 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const PlannerWindow = ({ menuView, setMenuView }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const startDate = useSelector((state) => state.schedule.startDate);
   const endDate = useSelector((state) => state.schedule.endDate);
   const destination = useSelector((state) => state.schedule.destination);
   const schedules = useSelector((state) => state.schedule.schedules);
+
   const dayDiff = getDayDiff(startDate, endDate);
-  const navigate = useNavigate();
 
   const [isOpenDialog, openDialog, closeDialog] = useOpenDialog();
 
@@ -54,6 +55,7 @@ const PlannerWindow = ({ menuView, setMenuView }) => {
           }}
         />
       )}
+
       <PlannerWrapper menuView={menuView}>
         <PlannerContent>
           <PlanInfoCard destination={destination}>

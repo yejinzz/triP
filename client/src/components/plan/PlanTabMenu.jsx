@@ -9,11 +9,6 @@ const PlanTabMenu = ({ dayDiff, savePlan, updatePlan }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const selectedDay = useSelector((state) => state.schedule.selectedDay);
-
-  const handleClickButton = (day) => {
-    dispatch(setSelectDay(`day ${day}`));
-  };
-
   return (
     <TabMenuWrapper>
       <DayLists>
@@ -24,7 +19,7 @@ const PlanTabMenu = ({ dayDiff, savePlan, updatePlan }) => {
             .map((_, idx) => (
               <li key={idx}>
                 <Button
-                  onClick={() => handleClickButton(idx + 1)}
+                  onClick={() => dispatch(setSelectDay(idx + 1))}
                   selected={`day ${idx + 1}` === selectedDay}
                   radius="10px"
                   variant="outline"
