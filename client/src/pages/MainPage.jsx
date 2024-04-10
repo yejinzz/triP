@@ -11,12 +11,10 @@ const MainPage = () => {
     const isLogin = localStorage.getItem("isLogin");
 
     if (isLogin) {
-      navigate("/plan");
-      return;
+      return location.replace("/plan");
     }
     if (!isLogin) {
-      navigate("/login");
-      return;
+      return navigate("/login");
     }
   };
 
