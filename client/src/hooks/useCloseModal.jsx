@@ -7,7 +7,7 @@ const useCloseModal = (ref, handler) => {
 
   useEffect(() => {
     const listener = (e) => {
-      if (!ref.current || ref.current.contains(e.target)) {
+      if (!ref || ref.current.contains(e.target)) {
         return;
       }
 

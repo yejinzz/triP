@@ -14,7 +14,6 @@ const PasswordInput = ({
   const validPwdOption = getPasswordByType(type, watch);
 
   const errorMsg = errors[type]?.message;
-  // console.log(type, ValidPwdOption, errorMsg);
   return (
     <InputBox>
       <label htmlFor={type}>{label}</label>

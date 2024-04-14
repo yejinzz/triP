@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const PlanDetail = ({ children, label }) => {
+const PlanDetail = ({ children = null, label }) => {
   return (
     <PlanDetailContainer>
       <h3>{label}</h3>

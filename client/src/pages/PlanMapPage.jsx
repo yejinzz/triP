@@ -12,6 +12,8 @@ import TripDatePicker from "@/components/plan/date/TripDatePicker";
 import PlaceSearchTool from "@/components/plan/place/PlaceSearchTool";
 import { setMapCenter } from "@/store/slice/mapSlice";
 import { useParams } from "react-router-dom";
+import { setInitSchedule } from "../store/slice/scheduleSlice";
+import { getDayDiff } from "../utils/getDayDiff";
 
 const PlanMapPage = () => {
   const { id } = useParams();
@@ -23,7 +25,7 @@ const PlanMapPage = () => {
 
   const [initialModal, setInitialModal] = useState(false);
   const [menuView, setMenuView] = useState(false);
-  // const [result, setResult] = useState([]);
+  const dayDiff = getDayDiff(startDate, endDate);
 
   const handleCreateSchedule = () => {
     if (!(startDate && endDate)) {
@@ -44,6 +46,7 @@ const PlanMapPage = () => {
       );
       setInitialModal(false);
       setMenuView(true);
+      dispatch(setInitSchedule({ dayDiff }));
       return;
     }
   };
@@ -77,7 +80,7 @@ const PlanMapPage = () => {
 
       <PlannerWindow menuView={menuView} setMenuView={setMenuView} />
       <PlaceSearchTool />
-      <Map menuView={menuView} />
+      <Map $menuView={menuView} />
       <ZoomBtn />
     </PlanMapContainer>
   );
@@ -88,12 +91,14 @@ export default PlanMapPage;
 const PlanMapContainer = styled.main`
   position: relative;
   width: 100%;
-  height: calc(100vh - 80px);
+  height: 100vh;
   overflow: hidden;
 `;
 const RegionLists = styled.div`
   display: flex;
   flex-direction: column;
+  /* justify-content: space-between; */
+
   gap: 2rem;
   .title {
     font-size: 1.2rem;
@@ -106,7 +111,11 @@ const RegionLists = styled.div`
     width: 750px;
     height: 350px;
     overflow-y: scroll;
-    /* padding-bottom: 1rem; */
-    /* margin: 1.5rem 0; */
+  }
+  @media (max-width: 768px) {
+    & > ul {
+      width: 100%;
+      height: 250px;
+    }
   }
 `;

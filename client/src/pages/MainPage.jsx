@@ -11,7 +11,7 @@ const MainPage = () => {
     const isLogin = localStorage.getItem("isLogin");
 
     if (isLogin) {
-      return location.replace("/plan");
+      return navigate("/plan");
     }
     if (!isLogin) {
       return navigate("/login");
@@ -22,10 +22,12 @@ const MainPage = () => {
     <MainSection>
       <BackGroundImg />
       <Content>
-        <h2>MBTI, P의 여행.</h2>
+        <h2>
+          국내 여행 플래너 <span className="logo_style">triP</span>
+        </h2>
 
         <TypingText fontSize={"1.3rem"}>
-          파워 P의 여행 계획을 쉽고 알차게 !
+          여행을 쉽고 빠르게 계획해 보세요!
         </TypingText>
         <Button variant="primary" onClick={() => handleNavigation()}>
           일정 생성하기
@@ -49,7 +51,7 @@ const BackGroundImg = styled.div`
 `;
 
 const Content = styled.div`
-  /* min-width: 1200px; */
+  /* min-width: 310px; */
   padding: 0 2rem;
   position: absolute;
   top: 50%;
@@ -57,7 +59,7 @@ const Content = styled.div`
   /* transform: translate(-50%, -50%); */
   z-index: 2;
   & h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #fff;
   }
 `;

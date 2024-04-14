@@ -9,7 +9,7 @@ const MyPageTabMenu = ({ selectedMenu, setSelectedMenu }) => {
           return (
             <Menu
               key={idx}
-              selectedMenu={selectedMenu === idx}
+              className={selectedMenu === idx ? "active" : ""}
               onClick={() => setSelectedMenu(idx)}
             >
               {menu.name}
@@ -23,6 +23,9 @@ const MyPageTabMenu = ({ selectedMenu, setSelectedMenu }) => {
 
 export default MyPageTabMenu;
 const TabMenu = styled.div`
+  /* margin: 3rem; */
+  border-bottom: 0.5px solid var(--color-gray);
+
   ul {
     display: flex;
   }
@@ -32,11 +35,12 @@ const Menu = styled.li`
   padding: 1rem 2rem;
   font-weight: bold;
   font-size: 1rem;
-  color: ${({ selectedMenu }) =>
-    selectedMenu ? "var(--color-primary)" : "var(--color-gray)"};
-  border-bottom: ${({ selectedMenu }) =>
-    selectedMenu
-      ? "4px solid var(--color-primary)"
-      : "4px solid var(--color-gray-50)"};
+  color: var(--color-gray);
+  border-bottom: 4px solid var(--color-gray-50);
+  &.active {
+    color: var(--color-primary);
+    border-bottom: 4px solid var(--color-primary);
+  }
+
   cursor: pointer;
 `;

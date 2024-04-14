@@ -4,7 +4,6 @@ import LoginForm from "../components/auth/LoginForm";
 
 const AuthPage = () => {
   const path = location.pathname;
-  console.log(path);
   return (
     <FormContainer>
       {path === "/login" && <LoginForm />}
@@ -19,9 +18,11 @@ const FormContainer = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 
   & form {
+    margin-top: 160px;
+    margin-bottom: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -35,6 +36,12 @@ const FormContainer = styled.section`
         margin-left: 0.25rem;
         color: var(--color-primary);
       }
+    }
+  }
+  @media (max-width: 768px) {
+    & form {
+      width: 100%;
+      padding: 0 2rem;
     }
   }
 `;

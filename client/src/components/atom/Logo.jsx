@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const Logo = ({ path }) => {
+const Logo = ({ path, scrollPosition }) => {
   return (
     <Link to="/">
       <LogoText
         className="logo_style"
-        path={path === "/" || path === "/mypage"}
+        $path={path === "/" || path === "/mypage"}
+        $scrollPosition={scrollPosition}
       >
         triP.
       </LogoText>
@@ -17,5 +18,6 @@ const Logo = ({ path }) => {
 export default Logo;
 
 const LogoText = styled.h1`
-  color: ${({ path }) => path && "#fff"};
+  color: ${(props) => props.$path && props.$scrollPosition && "#fff"};
+  font-size: 1.5rem;
 `;

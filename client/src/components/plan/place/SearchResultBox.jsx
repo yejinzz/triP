@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SearchResultBox = ({ children, totalNum }) => {
+const SearchResultBox = ({ children = null, totalNum }) => {
   return (
     <SearchResultContainer>
       <div className="search__total">
@@ -18,7 +18,6 @@ const SearchResultContainer = styled.div`
   border-radius: 15px;
   background-color: #fff;
   box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.15);
-  /* min-height: 150px; */
   &::-webkit-scrollbar {
     width: 5px;
     border-radius: 25px;
@@ -35,7 +34,6 @@ const SearchResultContainer = styled.div`
     min-height: 150px;
   }
   .search__total {
-    background-color: #fff;
     border-bottom: 0.5px solid var(--color-gray);
     padding: 1rem;
     & > span {

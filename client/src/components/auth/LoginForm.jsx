@@ -21,7 +21,6 @@ const LoginForm = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = (data) => {
-    // console.log(data);
     instance
       .post(`/api/auth/login`, {
         email: data.email,

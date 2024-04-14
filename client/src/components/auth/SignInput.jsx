@@ -6,7 +6,6 @@ const SignInput = ({ type, label, placeholder, register, errors = "" }) => {
   const registerFormat = getValidOptionByType(type);
 
   const errorMsg = errors[type]?.message;
-  //   console.log(type, registerFormat, errorMsg);
   return (
     <InputBox>
       <label htmlFor={type}>{label}</label>

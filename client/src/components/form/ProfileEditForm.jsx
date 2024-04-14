@@ -29,11 +29,9 @@ const ProfileEditForm = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = (data) => {
-    console.log(data);
     instance
       .patch(`/api/user/${userInfo.userId}`, data)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         location.reload();
       })
       .catch((err) => {
@@ -129,10 +127,7 @@ const ProfileEditForm = () => {
 
 export default ProfileEditForm;
 const EditForm = styled.form`
-  /* align-items: center; */
-
   width: 500px;
-  /* margin: 2rem auto; */
   .join__date {
     p {
       font-weight: 100;
@@ -153,5 +148,9 @@ const EditForm = styled.form`
       color: var(--color-gray);
       border-color: var(--color-gray);
     }
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
   }
 `;

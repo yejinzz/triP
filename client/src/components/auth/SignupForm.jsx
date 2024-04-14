@@ -22,14 +22,12 @@ const SignupForm = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = (data) => {
-    console.log(data);
     instance
       .post(`/api/auth/signup`, {
         username: data.username,
         email: data.email,
         password: data.password,
       })
-      // .then((res) => console.log(res))
       .then(() => {
         openDialog();
       })

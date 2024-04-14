@@ -10,6 +10,7 @@ import { getDayDiff } from "@/utils/getDayDiff";
 import useOpenDialog from "@/hooks/useOpenDialog";
 import Confirm from "../common/dialog/Confirm";
 import { useNavigate, useParams } from "react-router-dom";
+import Logo from "@/components/atom/Logo";
 
 const PlannerWindow = ({ menuView, setMenuView }) => {
   const { id } = useParams();
@@ -19,8 +20,7 @@ const PlannerWindow = ({ menuView, setMenuView }) => {
   const destination = useSelector((state) => state.schedule.destination);
   const schedules = useSelector((state) => state.schedule.schedules);
 
-  const dayDiff = getDayDiff(startDate, endDate);
-
+  const dayDiff = getDayDiff(startDate, endDate) || null;
   const [isOpenDialog, openDialog, closeDialog] = useOpenDialog();
 
   const handleSavePlan = () => {
@@ -56,18 +56,22 @@ const PlannerWindow = ({ menuView, setMenuView }) => {
         />
       )}
 
-      <PlannerWrapper menuView={menuView}>
-        <PlannerContent>
+      <PlannerContent $menuView={menuView}>
+        <PlannerWrapper>
           <PlanInfoCard destination={destination}>
             <div className="card_background" />
+
             <div className="plan_info">
-              <h2 className="region_name">{destination.regionName}</h2>
-              {startDate && endDate && (
-                <p className="selected_period">{`${getDateFormat(
-                  startDate,
-                  "korean"
-                )} - ${getDateFormat(endDate, "korean")}`}</p>
-              )}
+              <Logo />
+              <div>
+                <h2 className="region_name">{destination.regionName}</h2>
+                {startDate && endDate && (
+                  <p className="selected_period">{`${getDateFormat(
+                    startDate,
+                    "korean"
+                  )} - ${getDateFormat(endDate, "korean")}`}</p>
+                )}
+              </div>
             </div>
           </PlanInfoCard>
           <PlanDetail>
@@ -78,8 +82,8 @@ const PlannerWindow = ({ menuView, setMenuView }) => {
             />
             <ScheduleList />
           </PlanDetail>
-        </PlannerContent>
-      </PlannerWrapper>
+        </PlannerWrapper>
+      </PlannerContent>
       <ToggleBtn menuView={menuView} setMenuView={setMenuView} />
     </>
   );
@@ -89,7 +93,7 @@ export default PlannerWindow;
 
 const ToggleBtn = ({ menuView, setMenuView }) => {
   return (
-    <ToggleWrapper menuView={menuView}>
+    <ToggleWrapper $menuView={menuView}>
       {menuView ? (
         <MdKeyboardArrowLeft
           onClick={() => {
@@ -107,45 +111,44 @@ const ToggleBtn = ({ menuView, setMenuView }) => {
   );
 };
 
-const PlannerWrapper = styled.div`
+const PlannerContent = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 450px;
-  height: calc(100vh - 80px);
-  background-color: #fff;
+  max-width: 450px;
+  min-width: 450px;
+  height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 3;
-  transform: ${({ menuView }) => !menuView && "translateX(-100%)"};
+  z-index: 10;
+  transform: ${({ $menuView }) => !$menuView && "translateX(-100%)"};
   transition: all 1s;
   box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.15);
+
+  @media (max-width: 425px) {
+    /* width: 90%; */
+    max-width: 90%;
+    min-width: 90%;
+  }
+`;
+const PlannerWrapper = styled.div`
+  /* flex: 1;
+  -ms-flex: 1; */
+  flex-grow: 1;
+  background-color: #fff;
   .title {
     margin-bottom: 1rem;
   }
 `;
 
 const PlanDetail = styled.div`
-  /* display: flex;
-  justify-content: space-between; */
-  /*flex-direction: row; */
-  display: grid;
-  grid-template-columns: 0.5fr 3fr;
+  display: flex;
   height: calc(100% - 200px);
-  gap: 2rem;
+  gap: 1rem;
   padding: 1rem;
-  .info {
-    /* width: 100%; */
-    /* max-width: 100%; */
-  }
 `;
-const PlannerContent = styled.div`
-  flex: 1;
-  -ms-flex: 1;
-`;
-const PlanInfoCard = styled.div`
-  max-width: 450px;
 
+const PlanInfoCard = styled.div`
   .card_background {
     background-image: ${({ destination }) => `url(${destination.regionImg})`};
     background-repeat: no-repeat;
@@ -157,10 +160,11 @@ const PlanInfoCard = styled.div`
   }
 
   .plan_info {
+    height: 200px;
     position: absolute;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    justify-content: space-between;
     top: 0;
     padding: 2rem;
     color: #fff;
@@ -171,7 +175,7 @@ const PlanInfoCard = styled.div`
     .selected_period {
       font-size: 0.875rem;
       font-family: "Montserrat", sans-serif;
-      /* margin-bottom: 0.5rem; */
+      margin-top: 0.5rem;
     }
 
     .total_period {
@@ -191,9 +195,18 @@ const ToggleWrapper = styled.div`
   font-size: 1.6rem;
   position: absolute;
   top: 50%;
-  left: ${({ menuView }) => (menuView ? "450px" : "0")};
+  left: ${({ $menuView }) => ($menuView ? "450px" : "0")};
   transition: all 1s;
   transform: translateY(-50%);
-  z-index: 2;
+  z-index: 9;
   cursor: pointer;
+
+  @media (max-width: 425px) {
+    /* width: 90%; */
+    /* height: 48px; */
+    /* top: 0; */
+    /* z-index: 9999; */
+    left: ${({ $menuView }) => ($menuView ? "90%" : "0")};
+    /* left: 90%; */
+  }
 `;

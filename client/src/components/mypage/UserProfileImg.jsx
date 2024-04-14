@@ -24,8 +24,7 @@ const UserProfileImg = () => {
       .patch(`/api/user/${userInfo.userId}`, {
         thumbnail: selectedProfile,
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         dispatch(setUserInfo({ thumbNail: selectedProfile }));
       });
     return setProfileModal(false);
@@ -34,16 +33,18 @@ const UserProfileImg = () => {
     <>
       {profileModal && (
         <Modal modalRef={modalRef} handler={() => setProfileModal(false)}>
-          <TitleWrapper>
-            <h2>프로필 선택</h2>
-            <p>사용할 프로필을 선택해주세요.</p>
-          </TitleWrapper>
-          <ProfileImgChangeForm
-            selecte={selectedProfile}
-            setSelected={setSelectedProfile}
-            onClose={() => setProfileModal(false)}
-            onChange={handleProfileChange}
-          />
+          <ProfileFormWrapper>
+            <div className="title__wrap">
+              <h2>프로필 선택</h2>
+              <p>사용할 프로필을 선택해주세요.</p>
+            </div>
+            <ProfileImgChangeForm
+              selecte={selectedProfile}
+              setSelected={setSelectedProfile}
+              onClose={() => setProfileModal(false)}
+              onChange={handleProfileChange}
+            />
+          </ProfileFormWrapper>
         </Modal>
       )}
       <ProfileImgContainer>
@@ -100,8 +101,10 @@ const ProfileImgContainer = styled.div`
   }
 `;
 
-const TitleWrapper = styled.div`
-  p {
-    margin: 1rem 0;
+const ProfileFormWrapper = styled.div`
+  .title__wrap {
+    p {
+      margin: 1rem 0;
+    }
   }
 `;

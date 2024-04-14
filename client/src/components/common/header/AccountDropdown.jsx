@@ -6,7 +6,7 @@ import useGetUserData from "@/hooks/useGetUserData";
 import { useSelector } from "react-redux";
 import { postLogout } from "@/api/api";
 
-const AccountDropdown = ({ path }) => {
+const AccountDropdown = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -18,11 +18,11 @@ const AccountDropdown = ({ path }) => {
 
   return (
     <AccountWrapper ref={dropdownRef}>
-      <AccountBtn onClick={() => setOpen(!open)}>
+      <AccountBtn onClick={() => setOpen(!open)} aria-label="계정 프로필 버튼">
         <img
           src={userInfo.thumbNail}
+          alt="유저 이미지"
           className="Account__thumb"
-          path={path === "/" || path === "/mypage"}
         />
       </AccountBtn>
 
@@ -31,8 +31,8 @@ const AccountDropdown = ({ path }) => {
           <div className="drop__user">
             <img
               src={userInfo.thumbNail}
+              alt="유저 이미지"
               className="Account__thumb"
-              path={path === "/" || path === "/mypage"}
             />
             <p>{userInfo.userName}</p>
           </div>

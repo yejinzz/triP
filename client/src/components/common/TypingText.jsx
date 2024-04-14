@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
-const TypingText = ({ children, fontSize }) => {
+const TypingText = ({ children = null, fontSize }) => {
   const [text, setText] = useState("");
   const [count, setCount] = useState(0);
 

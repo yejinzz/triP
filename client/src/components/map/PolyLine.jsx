@@ -1,12 +1,11 @@
 import { Polyline } from "react-kakao-maps-sdk";
 import { useSelector } from "react-redux";
 
-const PolyLine = ({ key, linePath }) => {
+const PolyLine = ({ linePath }) => {
   const mapLevel = useSelector((state) => state.map.mapLevel);
 
   return (
     <Polyline
-      key={key}
       path={linePath}
       strokeOpacity={1}
       strokeWeight={14 - mapLevel}

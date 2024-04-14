@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { getDateFormat } from "@/utils/getFormatDate";
 import { IoTrashOutline } from "@react-icons/all-files/io5/IoTrashOutline";
+
 import Button from "../atom/button/Button";
 import PlanTitle from "./PlanTitle";
 import { instance } from "@/api/instance";
@@ -19,6 +20,7 @@ import {
 const MyPlanItem = ({ plan }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [isOpenDialog, openDialog, closeDialog] = useOpenDialog();
 
   const deletePlan = () => {
@@ -29,7 +31,6 @@ const MyPlanItem = ({ plan }) => {
 
   const getPlan = () => {
     instance.get(`/api/plan/${plan._id}`).then((res) => {
-      console.log(res.data);
       navigate(`/plan/${plan._id}`);
 
       dispatch(setDestination(res.data.destination));
@@ -52,11 +53,9 @@ const MyPlanItem = ({ plan }) => {
         />
       )}
       <PlanItemBox>
-        <img
-          className="region__img"
-          src={plan.destination.regionImg}
-          alt="여행 목적지 이미지"
-        />
+        <figure className="region__img">
+          <img src={plan.destination.regionImg} alt="여행 목적지 이미지" />
+        </figure>
         <div className="plan__item_wrap">
           <div className="plan__info_wrap">
             <span className="Dday__tag">
@@ -69,20 +68,17 @@ const MyPlanItem = ({ plan }) => {
             <span>{`${getDateFormat(plan.startDate, "dot")}-
             ${getDateFormat(plan.endDate, "dot")}`}</span>
           </div>
-
-          <div className="plan__btn_wrap">
-            <Button
-              width="fit-content"
-              onClick={() => {
-                getPlan();
-              }}
-            >
-              일정 보기
-            </Button>
-          </div>
         </div>
-
         <div className="plan__delete_btn">
+          <Button
+            width="fit-content"
+            onClick={() => {
+              getPlan();
+            }}
+          >
+            일정 보기
+          </Button>
+
           <IoTrashOutline onClick={() => openDialog()} />
         </div>
       </PlanItemBox>
@@ -94,26 +90,24 @@ export default MyPlanItem;
 const PlanItemBox = styled.div`
   /* display: inline; */
   display: flex;
-
-  /* flex-direction: column; */
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   width: 100%;
-  padding: 0.5rem;
-
+  padding: 1rem;
+  background-color: #fff;
+  gap: 1rem;
   .region__img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px;
+    & > img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
   }
   .plan__item_wrap {
     width: 100%;
     display: flex;
-    /* flex-direction: column; */
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
     .plan__info_wrap {
       display: flex;
       flex-direction: column;
@@ -129,21 +123,30 @@ const PlanItemBox = styled.div`
         background-color: #424242;
       }
     }
-
-    .plan__btn_wrap {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-    }
   }
   .plan__delete_btn {
     display: flex;
     align-items: center;
-    font-size: 20px;
-    color: var(--color-red);
-    margin: 0 0.7rem;
+
     & > svg {
       cursor: pointer;
+      font-size: 20px;
+      color: var(--color-red);
+      margin-left: 1rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    .region__img {
+      & > img {
+        width: 100%;
+        height: 150px;
+      }
+    }
+
+    .plan__delete_btn {
+      justify-content: space-between;
     }
   }
 `;

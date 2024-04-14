@@ -32,17 +32,21 @@ const MyPage = () => {
 export default MyPage;
 
 const MyPageLayout = styled.main`
+  /* max-width: 1200px; */
   .content__section {
-    max-width: 1200px;
-    /* min-height: calc(100vh - 500px); */
+    max-width: 64rem;
+    min-height: calc(100vh - 500px);
     margin: 3rem auto;
+    padding: 1rem;
+    /* background-color: var(--color-primary-30); */
     .content__wrap {
       display: flex;
+      width: 100%;
       flex-direction: column;
       align-items: center;
       gap: 2rem;
       padding: 3rem 0;
-      border: 0.5px solid var(--color-gray-50);
+
       h2 {
         font-weight: bold;
         text-align: center;

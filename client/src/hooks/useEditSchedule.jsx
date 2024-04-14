@@ -14,7 +14,6 @@ const useScheduleEditor = () => {
     (state) => state.editedSchedule.editedSchedules
   );
   const selectedDay = useSelector((state) => state.schedule.selectedDay);
-
   const handleEditMode = (initialSchedules) => {
     if (!isEdit) {
       dispatch(setEditedSchedule(initialSchedules));

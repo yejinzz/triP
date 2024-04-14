@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { IoCloseOutline } from "@react-icons/all-files/io5/IoCloseOutline";
 import { createPortal } from "react-dom";
 
-const Modal = ({ children, modalRef = null, handler = null }) => {
+const Modal = ({ children = null, modalRef = null, handler = null }) => {
   useCloseModal(modalRef, handler);
 
   return createPortal(
@@ -26,10 +26,17 @@ const ModalBox = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 3rem;
+  padding: 2.5rem;
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
 `;
 const CloseIcon = styled(IoCloseOutline)`
   position: absolute;

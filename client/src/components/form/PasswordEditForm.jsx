@@ -21,12 +21,10 @@ const PasswordEditForm = ({ setOpenPwdForm }) => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = (data) => {
-    console.log(data);
     instance
       .patch(`/api/user/${userInfo.userId}`, data)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res);
           setOpenPwdForm(false);
         }
       })
@@ -78,8 +76,6 @@ const PasswordEditForm = ({ setOpenPwdForm }) => {
 
 export default PasswordEditForm;
 const PwdEditForm = styled.form`
-  /* align-items: center; */
-
   width: 500px;
 
   fieldset {

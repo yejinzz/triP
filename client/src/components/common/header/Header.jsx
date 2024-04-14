@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
@@ -7,28 +6,23 @@ import AccountDropdown from "./AccountDropdown";
 import Button from "@/components/atom/button/Button";
 
 const Header = () => {
-  const [headerColor, setHeaderColor] = useState("transparent");
   const scrollPosition = useScrollPosition();
   const location = useLocation();
   const path = location.pathname;
   const isLogin = localStorage.getItem("isLogin");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if ((path === "/mypage" || path === "/") && scrollPosition < 500) {
-      setHeaderColor("transparent");
-    } else {
-      setHeaderColor("#ffffff3a");
-    }
-  }, [scrollPosition, path]);
-
   return (
     <>
-      <HeaderContainer path={path} headerColor={headerColor}>
-        <Logo path={path} />
-        {/* <div className="nav__wrapper"> */}
+      <HeaderContainer
+        path={path}
+        $headerColor={
+          (path === "/mypage" || path === "/") && scrollPosition < 450
+        }
+      >
+        <Logo path={path} scrollPosition={scrollPosition < 450} />
         {isLogin ? (
-          <AccountDropdown path={path} />
+          <AccountDropdown />
         ) : (
           <Button
             width={"100px"}
@@ -48,23 +42,24 @@ const Header = () => {
 export default Header;
 
 const HeaderContainer = styled.header`
-  display: flex;
+  display: ${(props) => (props.path.startsWith("/plan") ? "none" : "flex")};
+
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 0 2rem;
   height: 80px;
+  position: fixed;
   ${(props) =>
-    props.path === "/mypage" || props.path === "/"
-      ? ` width:100%;
-          position: fixed;
-          background-color: ${props.headerColor};
+    props.$headerColor
+      ? ` 
+          background-color: transparent;
         `
       : ` 
-          position: sticky;
-          border-bottom: 1px solid var(--color-gray-50);
           background-color: #fff;
+          border-bottom: 1px solid var(--color-gray-50);
         `}
+
   top: 0;
   z-index: 99;
   transition: background-color 0.2s ease-out;

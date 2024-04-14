@@ -7,15 +7,9 @@ const MyPlanList = () => {
   const [allPlan, setAllPlan] = useState([]);
 
   useEffect(() => {
-    instance
-      .get(`/api/plan/`)
-      .then((res) => {
-        console.log(res);
-        setAllPlan(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    instance.get(`/api/plan/`).then((res) => {
+      setAllPlan(res.data);
+    });
   }, []);
 
   return (
@@ -39,22 +33,15 @@ const MyPlanList = () => {
 
 export default MyPlanList;
 const TripPlanList = styled.ul`
-  margin: 3rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
 `;
 
 const EmptyTripPlan = styled.div`
-  /* margin: 3rem; */
   display: flex;
   align-items: center;
-  /* flex-direction: column; */
-  /* row-gap: 2rem; */
-  /* color: var(--color-gray-50); */
-  /* width: 700px;
-  height: 200px; */
   height: 200px;
   color: #5d5d5d;
-  /* background-color: var(--color-gray-50); */
 `;

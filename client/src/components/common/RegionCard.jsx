@@ -21,7 +21,7 @@ const RegionCard = ({ regionInfo }) => {
   return (
     <RegionList
       onClick={() => handleRegionClick(regionInfo)}
-      isSelected={isSelected}
+      $isSelected={isSelected}
     >
       <img src={regionInfo.imgUrl} alt={regionInfo.name} />
       <div className="region-info">
@@ -40,8 +40,8 @@ const RegionList = styled.div`
   /* margin: 1rem; */
   text-transform: uppercase;
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-  transform: ${(props) => (props.isSelected ? "scale(1.1)" : "")};
-  opacity: ${(props) => (props.isSelected ? "1" : "0.5")};
+  transform: ${(props) => (props.$isSelected ? "scale(1.1)" : "")};
+  opacity: ${(props) => (props.$isSelected ? "1" : "0.5")};
   cursor: pointer;
   &:hover {
     transform: scale(1.1);

@@ -7,7 +7,6 @@ const ProfileImgChangeForm = ({ setSelected, onClose, onChange }) => {
     <Form>
       <ul className="profile__list">
         {PROFILE_IMAGE.map((imgUrl, idx) => {
-          console.log(imgUrl);
           return (
             <li key={idx}>
               <label htmlFor={`profile_${idx}`}>
@@ -16,7 +15,7 @@ const ProfileImgChangeForm = ({ setSelected, onClose, onChange }) => {
                   name="profile"
                   value={imgUrl}
                   id={`profile_${idx}`}
-                  imgUrl={imgUrl}
+                  $imgUrl={imgUrl}
                   onClick={(e) => setSelected(e.target.value)}
                 />
               </label>
@@ -45,20 +44,22 @@ const Form = styled.form`
     gap: 2rem;
     flex-wrap: wrap;
     width: 400px;
-    padding: 2rem 1rem;
+    padding: 2rem 0;
   }
   .profile__btn_wrap {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
+  }
+  @media (max-width: 768px) {
+    .profile__list {
+      width: 100%;
+    }
   }
 `;
 
 const ProfileItem = styled.input`
-  background-image: ${({ imgUrl }) => imgUrl && `url(${imgUrl})`};
+  background-image: ${({ $imgUrl }) => $imgUrl && `url(${$imgUrl})`};
   background-size: cover;
-  /* background-repeat: no-repeat; */
-  /* background-position: center center; */
-  /* outline: none; */
   appearance: none;
   width: 100px;
   height: 100px;

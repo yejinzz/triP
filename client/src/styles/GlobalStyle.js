@@ -89,7 +89,7 @@ h2{
   }
     /* logo */
     .logo_style {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     font-family: 'Montserrat';
     letter-spacing:3px;
   }

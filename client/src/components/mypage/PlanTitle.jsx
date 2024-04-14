@@ -12,8 +12,7 @@ const PlanTitle = ({ plan }) => {
   const patchPlan = (data) => {
     instance
       .patch(`/api/plan/${plan._id}`, { planTitle: data.title })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setTitle(data.title);
         return setIsEdit(false);
       });

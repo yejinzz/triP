@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { IoIosRemoveCircleOutline } from "@react-icons/all-files/io/IoIosRemoveCircleOutline";
-import { IoReorderThreeOutline } from "@react-icons/all-files/io5/IoReorderThreeOutline";
 import useScheduleEditor from "@/hooks/useEditSchedule";
 import ScheduleItem from "./ScheduleItem";
 
@@ -20,10 +18,10 @@ const ScheduleList = () => {
 
   return (
     <Container>
-      <EditButton isEdit={isEdit} onClick={() => handleEditMode(schedules)}>
+      <EditButton $isEdit={isEdit} onClick={() => handleEditMode(schedules)}>
         {!isEdit ? "일정 편집하기" : "편집 완료하기"}
       </EditButton>
-      <ListContainer>
+      <>
         {!isEdit ? (
           schedules[selectedDay]?.map((place, idx) => {
             return (
@@ -52,11 +50,11 @@ const ScheduleList = () => {
                             {...provided.dragHandleProps}
                             {...provided.draggableProps}
                           >
-                            <RemoveIcon
-                              onClick={() => handleRemoveSchedule(idx)}
+                            <ScheduleItem
+                              place={place}
+                              isEdit={isEdit}
+                              removeSchedule={() => handleRemoveSchedule(idx)}
                             />
-                            <ScheduleItem place={place} />
-                            <ChangeListIcon />
                           </li>
                         )}
                       </Draggable>
@@ -68,7 +66,7 @@ const ScheduleList = () => {
             </DragDropContext>
           </>
         )}
-      </ListContainer>
+      </>
     </Container>
   );
 };
@@ -77,23 +75,17 @@ export default ScheduleList;
 const EditButton = styled.button`
   width: 100%;
   /* background-color: #e2e2e2; */
-  background-color: ${({ isEdit }) =>
-    !isEdit ? "#e2e2e2" : "var(--color-primary)"};
-  color: ${({ isEdit }) => isEdit && "#fff"};
+  background-color: ${({ $isEdit }) =>
+    !$isEdit ? "#e2e2e2" : "var(--color-primary)"};
+  color: ${({ $isEdit }) => $isEdit && "#fff"};
   padding: 0.7rem;
   border-radius: 10px;
 `;
 
 const Container = styled.div`
+  width: 100%;
   height: 100%;
   overflow: auto;
-`;
-const ListContainer = styled.div`
-  .schedule {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
 `;
 
 const CircleMarker = styled.div`
@@ -111,13 +103,11 @@ const CircleMarker = styled.div`
   border-radius: 50%;
 `;
 const ScheduleContainer = styled.div`
+  /* width: 100%; */
   position: relative;
-  /* display: block; */
   padding-left: 2rem;
 
   &::before {
-    /* margin-right: 3rem; */
-    /* display: ${({ isEdit }) => isEdit && "none"}; */
     position: absolute;
     top: 0;
     left: 0;
@@ -126,13 +116,4 @@ const ScheduleContainer = styled.div`
     margin: 10px;
     height: 100%;
   }
-`;
-const RemoveIcon = styled(IoIosRemoveCircleOutline)`
-  font-size: 1.3rem;
-  cursor: pointer;
-  color: var(--color-red);
-`;
-const ChangeListIcon = styled(IoReorderThreeOutline)`
-  font-size: 1.2rem;
-  cursor: pointer;
 `;

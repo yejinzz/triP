@@ -11,6 +11,7 @@ import Confirm from "@/components/common/dialog/Confirm";
 import { getPlaceByCategory } from "@/api/api";
 import { setSearchPlace } from "@/store/slice/placeSlice";
 import useOpenDialog from "@/hooks/useOpenDialog";
+import PlaceAddBtn from "../../common/place_parts/PlaceAddBtn";
 
 const PlaceSearchTool = () => {
   const dispatch = useDispatch();
@@ -82,7 +83,8 @@ const PlaceSearchTool = () => {
                     {searchResult.map((place, idx) => {
                       return (
                         <li key={idx}>
-                          <PlaceItem place={place} openDialog={openDialog} />
+                          <PlaceItem place={place} />
+                          <PlaceAddBtn place={place} openDialog={openDialog} />
                         </li>
                       );
                     })}
@@ -107,8 +109,17 @@ const SearchToolContainer = styled.div`
   position: absolute;
   right: 10px;
   top: 10px;
-  z-index: 10;
+  z-index: 8;
   width: 300px;
+  @media (max-width: 425px) {
+    /* display: none; */
+    /* z-index: 2; */
+    right: 0;
+    top: 10px;
+    /* left: 0; */
+    padding: 0 1rem;
+    width: 100%;
+  }
 `;
 
 const CartegoryWrapper = styled.div`
@@ -140,4 +151,12 @@ const PlaceList = styled.ul`
   overflow-y: auto;
   padding: 0 1rem;
   padding-bottom: 1rem;
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1rem 0;
+    border-bottom: 0.5px solid var(--color-gray);
+  }
 `;

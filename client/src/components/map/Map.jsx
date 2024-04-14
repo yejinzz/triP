@@ -33,7 +33,7 @@ const Map = ({ menuView }) => {
       center={mapCenter}
       isPanto={true}
       level={mapLevel}
-      menuView={menuView}
+      $menuView={menuView}
       onCenterChanged={(map) =>
         dispatch(
           setMapCenter({
@@ -44,24 +44,22 @@ const Map = ({ menuView }) => {
       }
     >
       {searchResult.map((marker) => (
-        <>
-          <MapMarker
-            key={`marker-${marker.title}-${marker.mapy},${marker.mapx}`}
-            position={{
-              lat: marker.mapy,
-              lng: marker.mapx,
-            }}
-            image={{
-              src: "/markers/marker.svg",
-              size: {
-                width: 35,
-                height: 35,
-              },
-            }}
-            clickable={true}
-            onClick={() => handleClickPlace(marker)}
-          />
-        </>
+        <MapMarker
+          key={`marker-${marker.title}-${marker.mapy},${marker.mapx}`}
+          position={{
+            lat: marker.mapy,
+            lng: marker.mapx,
+          }}
+          image={{
+            src: "/markers/marker.svg",
+            size: {
+              width: 35,
+              height: 35,
+            },
+          }}
+          clickable={true}
+          onClick={() => handleClickPlace(marker)}
+        />
       ))}
       {isEdit
         ? editedSchedules[selectedDay]?.map((marker, idx) => (
@@ -78,7 +76,7 @@ const Map = ({ menuView }) => {
                   height: 50,
                 },
               }}
-              zIndex={999}
+              zIndex={99}
               onClick={() => {
                 handleClickPlace(marker);
               }}
@@ -98,7 +96,7 @@ const Map = ({ menuView }) => {
                   height: 50,
                 },
               }}
-              zIndex={999}
+              zIndex={99}
               onClick={() => {
                 handleClickPlace(marker);
               }}
@@ -138,8 +136,6 @@ const Map = ({ menuView }) => {
 export default Map;
 
 const StyledMap = styled(KakaoMap)`
-  /* width: 100%;
-  height: 100%; */
   position: absolute;
   top: 0;
   left: 0;
@@ -147,8 +143,9 @@ const StyledMap = styled(KakaoMap)`
   bottom: 0;
   overflow: hidden;
   transition: left 0.5s;
-  ${({ menuView }) =>
-    menuView &&
+
+  ${({ $menuView }) =>
+    $menuView &&
     css`
       left: 100px;
     `}

@@ -22,6 +22,7 @@ const App = () => {
     <>
       <Suspense fallback={<Loading />}>
         <Header />
+        {/* <MobileNav /> */}
         <Routes>
           <Route path="/" element={<MainPage />} />
 
