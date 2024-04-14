@@ -36,7 +36,7 @@ app.use("/api/places", placeRouter);
 app.use("/api/plan", planRouter);
 
 const url = process.env.DB_URL;
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 connectDB(url)
   .then(() => {
