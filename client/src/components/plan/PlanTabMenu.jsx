@@ -13,14 +13,13 @@ const PlanTabMenu = ({ dayDiff, savePlan, updatePlan }) => {
     <TabMenuWrapper>
       <DayLists>
         {dayDiff &&
-          // !modalOpen &&
           Array(dayDiff)
             .fill(null)
             .map((_, idx) => (
               <li key={idx}>
                 <Button
                   onClick={() => dispatch(setSelectDay(idx + 1))}
-                  selected={`day ${idx + 1}` === selectedDay}
+                  className={selectedDay === `day ${idx + 1}` ? "active" : ""}
                   radius="10px"
                   variant="outline"
                 >
@@ -30,7 +29,12 @@ const PlanTabMenu = ({ dayDiff, savePlan, updatePlan }) => {
             ))}
       </DayLists>
       {!id ? (
-        <Button variant="primary" radius="10px" onClick={() => savePlan()}>
+        <Button
+          variant="primary"
+          // color="#000"
+          radius="10px"
+          onClick={() => savePlan()}
+        >
           저장
         </Button>
       ) : (
@@ -51,10 +55,13 @@ const TabMenuWrapper = styled.div`
   align-items: center;
   width: 80px;
   height: 100%;
-  overflow: auto;
-  & > button {
-    margin-top: 30px;
-  }
+  /* .button__wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  } */
 `;
 
 const DayLists = styled.ul`

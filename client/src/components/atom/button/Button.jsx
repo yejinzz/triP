@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
-const Button = ({ children, variant = "default", ...prop }) => {
+const Button = ({ children, variant = "default", className, ...prop }) => {
   return (
-    <S_Button variant={variant} {...prop}>
+    <S_Button className={className} variant={variant} {...prop}>
       {children}
     </S_Button>
   );
@@ -29,7 +29,6 @@ const VARIANT = {
     color: #fff;
     background-color: ${(props) =>
       props.disabled ? "var(--color-gray)" : "var(--color-primary)"};
-    background-color: var(--color-primary);
     box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.15);
 
     &:hover {
@@ -40,11 +39,12 @@ const VARIANT = {
     }
   `,
   outline: css`
-    background-color: ${(props) =>
-      props.selected ? "var(--color-primary-80)" : "transparent"};
-    color: ${(props) => (props.selected ? "#fff" : "var(--color-primary)")};
-    border: ${(props) =>
-      props.selected ? null : "1px solid var(--color-primary)"};
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    &.active {
+      background-color: var(--color-primary-80);
+      color: #fff;
+    }
     &:hover {
       border: 1px solid var(--color-primary-50);
       box-shadow: none;
@@ -59,6 +59,7 @@ const S_Button = styled.button`
   ${(props) => props.variant && VARIANT[props.variant]};
   border-radius: ${(props) => (props.radius ? props.radius : "10px")};
   width: ${(props) => (props.width ? props.width : "100%")};
+  /* background-color: ${(props) => props.color && props.color}; */
   /* min-width: max-content; */
   white-space: nowrap;
   transition: all 0.2s ease;
