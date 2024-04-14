@@ -1,14 +1,23 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* color */
+  --color-bg-100: rgb(238, 238, 238);
+  --color-bg-80: rgba(248, 240, 229, 0.8);
+  --color-bg-60: rgba(248, 240, 229, 0.6);
+  --color-bg-00: rgba(248, 240, 229, 0);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --color-primary: rgb(119, 118, 153);
+  --color-primary-80: rgba(119, 118, 153, 0.8);
+  --color-primary-50: rgba(119, 118, 153, 0.5);
+  --color-primary-20: rgba(119, 118, 153, 0.2);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --color-gray: #c6c6c6;
+  --color-gray-50: rgba(198, 198, 198, 0.5);
+  --color-gray-30: rgba(198, 198, 198, 0.2);
+
+  --color-red: #d64545;
+  --color-blue: #4568dc;
+
+  --shadow-box: 0px 0px 8px rgb(0, 0, 0, 0.2);
+  --shadow-btn-hover: 2px 2px 3px rgba(0, 0, 0, 0.1);
+  --shadow-btn-active: inset 2px 2px 3px rgba(0, 0, 0, 0.1);
 }
