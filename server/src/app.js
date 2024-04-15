@@ -35,7 +35,7 @@ app.use("/api/user", userRouter);
 app.use("/api/places", placeRouter);
 app.use("/api/plan", planRouter);
 
-const url = process.env.DB_URL;
+const url = process.env.MONGO_URI;
 const port = process.env.PORT || 3000;
 
 connectDB(url)
