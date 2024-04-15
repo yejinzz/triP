@@ -1,33 +1,34 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
+
   @font-face {
   font-family: 'Pretendard';
   font-weight: bold;
-  src: url('/src/assets/font/Pretendard-Bold.woff2') format('font-woff2');
-}
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 100;
-  src: url('/src/assets/font/Pretendard-Thin.woff2') format('font-woff2');
-}
+  src: url('font/Pretendard-Bold.woff2') format('woff2');
+  }
   @font-face {
-  font-family: 'Pretendard';
-  font-weight: 400;
-  src: url('/src/assets/font/Pretendard-Regular.woff2') format('font-woff2');
-}
+    font-family: 'Pretendard';
+    font-weight: 100;
+    src: url('font/Pretendard-Thin.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    src: url('font/Pretendard-Regular.woff2') format('woff2');
+  }
 
 
-@font-face {
+  @font-face {
   font-family: 'Montserrat';
   font-weight: normal;
-  src: url('/src/assets/font/Montserrat-Regular.woff2') format('font-woff2');
-}
-@font-face {
-  font-family: 'Montserrat';
-  font-weight: bold;
-  src: url('/src/assets/font/Montserrat-bold.woff2') format('font-woff2');
-}
+  src: url('font/Montserrat-Regular.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    font-weight: bold;
+    src: url('font/Montserrat-bold.woff2') format('woff2');
+  }
 
     *{
         box-sizing: border-box;
