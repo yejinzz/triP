@@ -16,6 +16,7 @@ import {
   setStartDate,
 } from "@/store/slice/scheduleSlice";
 import { deletePlan, getPlan } from "@/api/api";
+import { setMapCenter, setMapLevel } from "@/store/slice/mapSlice";
 
 const MyPlanItem = ({ plan }) => {
   const navigate = useNavigate();
@@ -31,6 +32,13 @@ const MyPlanItem = ({ plan }) => {
       dispatch(editSchedule(res.data.schedules));
       dispatch(setStartDate(res.data.startDate));
       dispatch(setEndDate(res.data.endDate));
+      dispatch(
+        setMapCenter({
+          lat: res.data.destination.coords.lat,
+          lng: res.data.destination.coords.lng,
+        })
+      );
+      dispatch(setMapLevel(11));
     });
   };
   return (
