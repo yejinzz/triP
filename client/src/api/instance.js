@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "https://port-0-trip-server-85phb42bluz5jgrr.sel5.cloudtype.app",
+  baseURL: import.meta.env.VITE_BASE_URL,
   header: {
     // "Content-Type": "application/json",
   },

@@ -7,7 +7,7 @@ const MyPlanList = () => {
   const [allPlan, setAllPlan] = useState([]);
 
   useEffect(() => {
-    instance.get(`/api/plan/`).then((res) => {
+    instance.get(`/api/plan`).then((res) => {
       setAllPlan(res.data);
     });
   }, []);

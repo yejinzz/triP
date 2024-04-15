@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { instance } from "@/api/instance";
 import { useSelector } from "react-redux";
 import Button from "../atom/button/Button";
 import Input from "../atom/Input";
@@ -13,6 +12,7 @@ import PasswordEditForm from "./PasswordEditForm";
 import useOpenDialog from "@/hooks/useOpenDialog";
 import Confirm from "../common/dialog/Confirm";
 import { deleteUser } from "@/api/api";
+import { patchUserInfo } from "@/api/api";
 
 const ProfileEditForm = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -29,8 +29,7 @@ const ProfileEditForm = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = (data) => {
-    instance
-      .patch(`/api/user/${userInfo.userId}`, data)
+    patchUserInfo(userInfo.userId, data)
       .then(() => {
         location.reload();
       })

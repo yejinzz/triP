@@ -1,11 +1,9 @@
 import { useForm } from "react-hook-form";
-import { instance } from "@/api/instance";
 import Button from "@/components/atom/button/Button";
 import PasswordInput from "../auth/PasswordInput";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-// import { setOpenDialog } from "@/store/slice/modalSlice";
-// import { useNavigate } from "react-router-dom";
+import { patchUserInfo } from "@/api/api";
 
 const PasswordEditForm = ({ setOpenPwdForm }) => {
   //   const navigate = useNavigate();
@@ -21,8 +19,7 @@ const PasswordEditForm = ({ setOpenPwdForm }) => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = (data) => {
-    instance
-      .patch(`/api/user/${userInfo.userId}`, data)
+    patchUserInfo(userInfo.userId, data)
       .then((res) => {
         if (res.status === 200) {
           setOpenPwdForm(false);

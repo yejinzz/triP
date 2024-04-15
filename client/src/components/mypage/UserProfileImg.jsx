@@ -2,10 +2,10 @@ import { RiEdit2Fill } from "@react-icons/all-files/ri/RiEdit2Fill";
 import { useRef, useState } from "react";
 import Modal from "../common/modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { instance } from "@/api/instance";
 import { setUserInfo } from "@/store/slice/userSlice";
 import ProfileImgChangeForm from "../form/ProfileImgChangeForm";
 import styled from "styled-components";
+import { patchUserInfo } from "@/api/api";
 
 const UserProfileImg = () => {
   const modalRef = useRef(null);
@@ -20,13 +20,11 @@ const UserProfileImg = () => {
       return setProfileModal(false);
     }
 
-    instance
-      .patch(`/api/user/${userInfo.userId}`, {
-        thumbnail: selectedProfile,
-      })
-      .then(() => {
-        dispatch(setUserInfo({ thumbNail: selectedProfile }));
-      });
+    patchUserInfo(userInfo.userId, {
+      thumbnail: selectedProfile,
+    }).then(() => {
+      dispatch(setUserInfo({ thumbNail: selectedProfile }));
+    });
     return setProfileModal(false);
   };
   return (

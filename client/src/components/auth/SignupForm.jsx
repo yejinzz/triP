@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { instance } from "@/api/instance";
 import Button from "@/components/atom/button/Button";
 import { getValidOptionByType } from "@/utils/getValidOptionByType";
 import PasswordInput from "./PasswordInput";
@@ -8,6 +7,7 @@ import Confirm from "../common/dialog/Confirm";
 import { useNavigate } from "react-router-dom";
 import Input from "../atom/Input";
 import useOpenDialog from "../../hooks/useOpenDialog";
+import { postSignup } from "../../api/api";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -22,12 +22,11 @@ const SignupForm = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = (data) => {
-    instance
-      .post(`/api/auth/signup`, {
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      })
+    postSignup({
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    })
       .then(() => {
         openDialog();
       })

@@ -5,12 +5,12 @@ import PlanTabMenu from "./PlanTabMenu";
 import { getDateFormat } from "@/utils/getFormatDate";
 import { useSelector } from "react-redux";
 import ScheduleList from "./ScheduleList";
-import { instance } from "@/api/instance";
 import { getDayDiff } from "@/utils/getDayDiff";
 import useOpenDialog from "@/hooks/useOpenDialog";
 import Confirm from "../common/dialog/Confirm";
 import { useNavigate, useParams } from "react-router-dom";
 import Logo from "@/components/atom/Logo";
+import { patchPlan, postPlan } from "@/api/api";
 
 const PlannerWindow = ({ menuView, setMenuView }) => {
   const { id } = useParams();
@@ -24,20 +24,18 @@ const PlannerWindow = ({ menuView, setMenuView }) => {
   const [isOpenDialog, openDialog, closeDialog] = useOpenDialog();
 
   const handleSavePlan = () => {
-    instance
-      .post("/api/plan", {
-        startDate: startDate,
-        endDate: endDate,
-        destination: destination,
-        schedules: schedules,
-      })
-      .then(() => {
-        openDialog();
-      });
+    postPlan({
+      startDate: startDate,
+      endDate: endDate,
+      destination: destination,
+      schedules: schedules,
+    }).then(() => {
+      openDialog();
+    });
   };
 
   const handleUpdatePlan = () => {
-    instance.patch(`/api/plan/${id}`, { schedules: schedules }).then(() => {
+    patchPlan(id, { schedules: schedules }).then(() => {
       return navigate("/mypage");
     });
   };

@@ -1,26 +1,24 @@
 import { FiEdit } from "@react-icons/all-files/fi/FiEdit";
-
 import { useState } from "react";
 import styled from "styled-components";
-import { instance } from "../../api/instance";
 import { useForm } from "react-hook-form";
+import { patchPlan } from "@/api/api";
 
 const PlanTitle = ({ plan }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState(plan.planTitle);
   const { register, handleSubmit } = useForm();
-  const patchPlan = (data) => {
-    instance
-      .patch(`/api/plan/${plan._id}`, { planTitle: data.title })
-      .then(() => {
-        setTitle(data.title);
-        return setIsEdit(false);
-      });
+
+  const patchPlanTitle = (data) => {
+    patchPlan(plan._id, { planTitle: data.title }).then(() => {
+      setTitle(data.title);
+      return setIsEdit(false);
+    });
   };
   return (
     <PlanTitleContainer>
       {isEdit ? (
-        <form onSubmit={handleSubmit(patchPlan)}>
+        <form onSubmit={handleSubmit(patchPlanTitle)}>
           <input
             className="plan__title_input"
             id="title"

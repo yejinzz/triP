@@ -4,7 +4,6 @@ import { IoTrashOutline } from "@react-icons/all-files/io5/IoTrashOutline";
 
 import Button from "../atom/button/Button";
 import PlanTitle from "./PlanTitle";
-import { instance } from "@/api/instance";
 import Confirm from "../common/dialog/Confirm";
 import { getDday } from "@/utils/getDayDiff";
 import useOpenDialog from "@/hooks/useOpenDialog";
@@ -16,6 +15,7 @@ import {
   setEndDate,
   setStartDate,
 } from "@/store/slice/scheduleSlice";
+import { deletePlan } from "../../api/api";
 
 const MyPlanItem = ({ plan }) => {
   const navigate = useNavigate();
@@ -23,14 +23,8 @@ const MyPlanItem = ({ plan }) => {
 
   const [isOpenDialog, openDialog, closeDialog] = useOpenDialog();
 
-  const deletePlan = () => {
-    instance.delete(`/api/plan/${plan._id}`).then(() => {
-      return location.reload();
-    });
-  };
-
   const getPlan = () => {
-    instance.get(`/api/plan/${plan._id}`).then((res) => {
+    getPlan(plan._id).then((res) => {
       navigate(`/plan/${plan._id}`);
 
       dispatch(setDestination(res.data.destination));
@@ -49,7 +43,7 @@ const MyPlanItem = ({ plan }) => {
           primaryLabel="취소하기"
           secondaryLabel="삭제하기"
           onClickPrimaryButton={() => closeDialog()}
-          onClickSecondaryButton={() => deletePlan()}
+          onClickSecondaryButton={() => deletePlan(plan._id)}
         />
       )}
       <PlanItemBox>

@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { instance } from "../api/instance";
 import { setUserInfo } from "../store/slice/userSlice";
+import { getUserInfo } from "../api/api";
 
 const useGetUserData = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    instance.get("/api/user").then((res) => {
+    getUserInfo().then((res) => {
       dispatch(
         setUserInfo({
           userId: res.data.userid,
@@ -18,7 +18,7 @@ const useGetUserData = () => {
         })
       );
     });
-  }, []); // dispatch 함수를 의존성 배열에 추가합니다.
+  }, []);
 };
 
 export default useGetUserData;

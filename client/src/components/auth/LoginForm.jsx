@@ -1,18 +1,18 @@
 import { useForm } from "react-hook-form";
-import { instance } from "@/api/instance";
 import Button from "@/components/atom/button/Button";
 import PasswordInput from "./PasswordInput";
 import Input from "@/components/atom/Input";
 import { getValidOptionByType } from "@/utils/getValidOptionByType";
 import Confirm from "@/components/common/dialog/Confirm";
 import { useState } from "react";
+import useOpenDialog from "@/hooks/useOpenDialog";
+import { postLogin } from "@/api/api";
+import { instance } from "../../api/instance";
 import { useNavigate } from "react-router-dom";
-import useOpenDialog from "../../hooks/useOpenDialog";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const [isOpenDialog, openDialog, closeDialog] = useOpenDialog();
-
+  const navigate = useNavigate();
   const [dialogContent, setDialogContent] = useState(null);
   const {
     register,
@@ -21,11 +21,10 @@ const LoginForm = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = (data) => {
-    instance
-      .post(`/api/auth/login`, {
-        email: data.email,
-        password: data.password,
-      })
+    postLogin({
+      email: data.email,
+      password: data.password,
+    })
       .then((res) => {
         const authHeader = res.headers["authorization"]; // 대소문자 모두 고려하여 접근
         instance.defaults.headers.common["authorization"] = `${authHeader}`;
