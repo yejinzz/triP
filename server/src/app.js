@@ -18,7 +18,11 @@ const {
 // CORS 사용
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://trip-yejinzz.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://trip-yejinzz.vercel.app",
+      "https://web-trip-client-85phb42blv09cyua.sel5.cloudtype.app",
+    ],
     credentials: true,
     exposedHeaders: ["Authorization"],
   })
