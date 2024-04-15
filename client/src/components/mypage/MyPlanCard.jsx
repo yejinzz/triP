@@ -15,7 +15,7 @@ import {
   setEndDate,
   setStartDate,
 } from "@/store/slice/scheduleSlice";
-import { deletePlan } from "../../api/api";
+import { deletePlan, getPlan } from "@/api/api";
 
 const MyPlanItem = ({ plan }) => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const MyPlanItem = ({ plan }) => {
 
   const [isOpenDialog, openDialog, closeDialog] = useOpenDialog();
 
-  const getPlan = () => {
+  const viewPlan = () => {
     getPlan(plan._id).then((res) => {
       navigate(`/plan/${plan._id}`);
 
@@ -63,11 +63,11 @@ const MyPlanItem = ({ plan }) => {
             ${getDateFormat(plan.endDate, "dot")}`}</span>
           </div>
         </div>
-        <div className="plan__delete_btn">
+        <div className="plan__btn_wrap">
           <Button
             width="fit-content"
             onClick={() => {
-              getPlan();
+              viewPlan();
             }}
           >
             일정 보기
@@ -118,7 +118,7 @@ const PlanItemBox = styled.div`
       }
     }
   }
-  .plan__delete_btn {
+  .plan__btn_wrap {
     display: flex;
     align-items: center;
 

@@ -11,12 +11,6 @@ const MyPage = lazy(() => import("@/pages/MyPage"));
 const PlanMapPage = lazy(() => import("@/pages/PlanMapPage"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
-// import MainPage from "@/pages/MainPage";
-// import PlanMapPage from "@/pages/PlanMapPage";
-// import AuthPage from "./pages/AuthPage";
-
-// import NotFound from "./pages/NotFound";
-
 const App = () => {
   return (
     <>

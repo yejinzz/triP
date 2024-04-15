@@ -27,7 +27,7 @@ const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: 'Montserrat';
     font-weight: bold;
-    src: url('font/Montserrat-bold.woff2') format('woff2');
+    src: url('font/Montserrat-SemiBold.woff2') format('woff2');
   }
 
     *{
