@@ -45,7 +45,6 @@ const PlanMapPage = () => {
         })
       );
       setInitialModal(false);
-      setMenuView(true);
       dispatch(setInitSchedule({ dayDiff }));
       return;
     }

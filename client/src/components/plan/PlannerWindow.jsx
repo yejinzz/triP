@@ -11,6 +11,7 @@ import Confirm from "../common/dialog/Confirm";
 import { useNavigate, useParams } from "react-router-dom";
 import Logo from "@/components/atom/Logo";
 import { patchPlan, postPlan } from "@/api/api";
+import { useEffect } from "react";
 
 const PlannerWindow = ({ menuView, setMenuView }) => {
   const { id } = useParams();
@@ -39,6 +40,12 @@ const PlannerWindow = ({ menuView, setMenuView }) => {
       return navigate("/mypage");
     });
   };
+
+  useEffect(() => {
+    if (Object.keys(schedules).length !== 0) {
+      setMenuView(true);
+    }
+  }, [schedules]);
 
   return (
     <>
