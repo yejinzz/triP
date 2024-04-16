@@ -207,11 +207,6 @@ const ToggleWrapper = styled.div`
   cursor: pointer;
 
   @media (max-width: 430px) {
-    /* width: 90%; */
-    /* height: 48px; */
-    /* top: 0; */
-    /* z-index: 9999; */
     left: ${({ $menuView }) => ($menuView ? "90%" : "0")};
-    /* left: 90%; */
   }
 `;

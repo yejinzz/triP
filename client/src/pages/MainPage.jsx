@@ -56,10 +56,14 @@ const Content = styled.div`
   position: absolute;
   top: 50%;
   left: 10%;
-  /* transform: translate(-50%, -50%); */
   z-index: 2;
   & h2 {
     font-size: 2rem;
     color: #fff;
+    white-space: nowrap;
+  }
+  @media (max-width: 430px) {
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `;
