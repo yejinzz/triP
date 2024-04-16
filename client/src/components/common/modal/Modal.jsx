@@ -27,6 +27,8 @@ const ModalBox = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 2.5rem;
+  max-height: 100%;
+  overflow: auto;
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);

@@ -5,17 +5,13 @@ exports.verifyAccessToken = (req, res, next) => {
   // auth에서 access token을 획득합니다.
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(" ")[1]; // Bearer 제거
-  if (!token)
-    return res.status(401).send({ msg: "엑세스 토큰을 입력해 주세요." }); // 토큰이 없다면 종료
 
   // access token 검증
   jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-    // access token이 만료된 경우 재생성하기
-    // console.log(err, user);
+    // access token이 만료된 경우 재생성하기;
     if (err) {
       req.expired = true; // 다음 미들웨어에 expired 프로퍼티에 true를 담아 보낸다.
       console.error(err.name, ":", err.message);
-      // res.status(401).send({ msg: "엑세스 토큰이 만료" });
     }
     req.user = user;
     next();
