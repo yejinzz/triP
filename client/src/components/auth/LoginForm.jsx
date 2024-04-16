@@ -1,8 +1,6 @@
 import { useForm } from "react-hook-form";
 import Button from "@/components/atom/button/Button";
-import PasswordInput from "./PasswordInput";
 import Input from "@/components/atom/Input";
-import { getValidOptionByType } from "@/utils/getValidOptionByType";
 import Confirm from "@/components/common/dialog/Confirm";
 import { useState } from "react";
 import useOpenDialog from "@/hooks/useOpenDialog";
@@ -19,19 +17,21 @@ const LoginForm = () => {
     handleSubmit,
     formState: { isDirty },
   } = useForm({ mode: "onChange" });
-
+  console.log(dialogContent);
   const onSubmit = (data) => {
     postLogin({
       email: data.email,
       password: data.password,
     })
       .then((res) => {
+        console.log(res);
         const authHeader = res.headers["authorization"]; // 대소문자 모두 고려하여 접근
         instance.defaults.headers.common["authorization"] = `${authHeader}`;
         localStorage.setItem("isLogin", true);
         return navigate("/");
       })
       .catch((err) => {
+        console.log(err);
         if (err.response.data.error === "Account not found") {
           setDialogContent("이메일을 확인해주세요.");
         } else if (err.response.data.error === "Incorrect password") {
@@ -57,16 +57,16 @@ const LoginForm = () => {
           label="이메일"
           type="email"
           placeholder="이메일을 입력해주세요."
-          getOption={getValidOptionByType}
+          // getOption={getValidOptionByType}
           register={register}
         ></Input>
-
-        <PasswordInput
+        <Input
           label="비밀번호"
           type="password"
           placeholder="비밀번호를 입력해주세요."
+          // getOption={getValidOptionByType}
           register={register}
-        ></PasswordInput>
+        ></Input>
 
         <Button variant="primary" type="submit" disabled={!isDirty}>
           로그인
