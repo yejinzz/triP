@@ -73,7 +73,7 @@ npm start
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://github.com/yejinzz/triP/assets/124851544/9ca4759f-5a9d-4cc6-822d-92a8742ce666"
+            <td><img width="500" height="350" src="https://github.com/yejinzz/triP/assets/124851544/9ca4759f-5a9d-4cc6-822d-92a8742ce666"
                     alt="메인페이지"></td>
             <td>
               <strong>홈/스플래쉬</strong>
