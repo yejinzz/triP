@@ -130,7 +130,7 @@ const PlannerContent = styled.div`
   transition: all 1s;
   box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.15);
 
-  @media (max-width: 425px) {
+  @media (max-width: 430px) {
     /* width: 90%; */
     max-width: 90%;
     min-width: 90%;
@@ -206,7 +206,7 @@ const ToggleWrapper = styled.div`
   z-index: 9;
   cursor: pointer;
 
-  @media (max-width: 425px) {
+  @media (max-width: 430px) {
     /* width: 90%; */
     /* height: 48px; */
     /* top: 0; */

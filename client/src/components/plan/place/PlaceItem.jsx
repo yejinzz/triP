@@ -79,9 +79,4 @@ const PlaceInfoBox = styled.div`
       height: 0.75rem;
     }
   }
-  @media (max-width: 425px) {
-    .place_info {
-      /* max-width: 100px; */
-    }
-  }
 `;

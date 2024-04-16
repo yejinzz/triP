@@ -111,7 +111,7 @@ const SearchToolContainer = styled.div`
   top: 10px;
   z-index: 8;
   width: 300px;
-  @media (max-width: 425px) {
+  @media (max-width: 430px) {
     /* display: none; */
     /* z-index: 2; */
     right: 0;
