@@ -8,12 +8,18 @@
     <h3 align="center"> 국내 여행 플래너, triP </h3> 
 </main>
 
-> Kakao Map API와 한국관광공사에서 제공하는 Tour API를 활용해 여행지 정보를 제공합니다. </br>
+<br/>
+
+> Kakao Map API와 한국관광공사에서 제공하는 Tour API를 활용해 여행지 정보를 제공합니다. <br/>
 > 여행 일정을 계획 / 관리할 수 있는 국내 여행 플래너입니다.
+
+<br/>
 
 - **작업 기간 :** 24.03 - 24.04
 - **배포 링크 :** [triP](https://web-trip-client-85phb42blv09cyua.sel5.cloudtype.app/)
 - **Figma 구상도 :** [디자인 시안](https://www.figma.com/file/Ei8MzFwlP1gqOBDT4GP9ic/Trip?type=design&node-id=0%3A1&mode=design&t=iapYZT420ZsSFWsF-1)
+
+<br/>
 
 ## 🏃🏻‍♂️ Install & Run
 
@@ -33,6 +39,8 @@ npm install
 npm start
 ```
 
+<br/>
+
 ## 🛠️ Stack
 
 ### **Front**
@@ -43,17 +51,27 @@ npm start
 
 <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"><img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white"><img src="https://img.shields.io/badge/mongodb-47A248?style=for-the-badge&logo=mongodb&logoColor=white">
 
+<br/>
+
 ## 🔍 주요 기능
 
 - 여행 일정 생성 ( 날짜 및 여행지, 일자별 여행 경로 설정 가능 )
+
 - 카테고리별 검색 및 직접 검색을 통한 장소 정보 제공
+  
 - 총 여행 일자별로 일정 추가 가능
+  
 - 지도 마커 선택 시 오버레이를 통해 장소 정보 제공
+  
 - Polyline을 통한 일자별 여행 경로 표시
+  
 - 생성한 나의 여행 리스트 확인 가능
+  
 - 회원가입, 로그인, 로그아웃
+  
 - 회원 정보 조회/수정/탈퇴
 
+<br/>
 
 ## 🖥️ 구현 화면 및 상세 기능
 
