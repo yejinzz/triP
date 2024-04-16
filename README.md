@@ -60,6 +60,74 @@ npm start
 - 회원가입, 로그인, 로그아웃
 - 회원 정보 조회/수정/탈퇴
 
+
+## 🖥️ 작업 화면
+
+### 메인 페이지
+
+<table>
+    <tbody>
+        <tr></tr>
+        <tr>
+            <th>시연</th>
+            <th>설명</th>
+        </tr>
+        <tr>
+            <td><img src="https://github.com/yejinzz/triP/assets/124851544/9ca4759f-5a9d-4cc6-822d-92a8742ce666"
+                    alt="메인페이지"></td>
+            <td>
+              <strong>홈/스플래쉬</strong>
+                <ul>
+                    <li>일정 생성하기 버튼 클릭시 로그인 여부에 따라 페이지 이동.</li>
+                    <li>로그인: 일정 생성 페이지로 이동</li>
+                    <li>비로그인: 로그인화면으로 이동</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+    
+<br/>
+    
+### 회원가입 / 로그인
+
+<table>
+    <tbody>
+        <tr></tr>
+        <tr>
+            <th>시연</th>
+            <th>설명</th>
+        </tr>
+        <tr>
+            <td><img src="https://github.com/yejinzz/triP/assets/124851544/c905fbbb-9665-487f-b7fa-e412e9dc0710"
+                    alt="회원가입"></td>
+            <td>
+              <strong>회원가입</strong>
+                <ul>
+                    <li>사용자의 정보를 입력받아 계정 생성. </li>
+                    <li>유효성 검사를 진행하고, 오류 메시지를 전달.</li>
+                    <li>* 계정 생성에 성공하면 다이얼로그 창으로 완료 메세지 전달 후 로그인 페이지로 이동.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td><img src="https://github.com/yejinzz/triP/assets/124851544/76dcbf64-42cd-4cec-898b-222fda77da00"
+                    alt="로그인"></td>
+            <td>
+              <strong>로그인</strong>
+                <ul>
+                    <li>로그인 정보 입력받아 계정 인증을 진행.</li>
+                    <li>이메일 또는 비밀번호 오류 시, 다이얼로그 창으로 오류 메세지 전달.</li>
+                    <li>로그인 인증이 완료되면 메인 페이지로 이동.</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br/>
+
 ## 💫 Trouble Shooting
 
 - **문제점**
