@@ -73,7 +73,7 @@ npm start
             <th>설명</th>
         </tr>
         <tr>
-            <td><img width="500" height="350" src="https://github.com/yejinzz/triP/assets/124851544/9ca4759f-5a9d-4cc6-822d-92a8742ce666"
+            <td><img width="100%" height="100%" src="https://github.com/yejinzz/triP/assets/124851544/9ca4759f-5a9d-4cc6-822d-92a8742ce666"
                     alt="메인페이지"></td>
             <td>
               <strong>홈/스플래쉬</strong>
@@ -99,7 +99,7 @@ npm start
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://github.com/yejinzz/triP/assets/124851544/c905fbbb-9665-487f-b7fa-e412e9dc0710"
+            <td><img width="100%" height="100%" src="https://github.com/yejinzz/triP/assets/124851544/c905fbbb-9665-487f-b7fa-e412e9dc0710"
                     alt="회원가입"></td>
             <td>
               <strong>회원가입</strong>
@@ -112,7 +112,7 @@ npm start
         </tr>
         <tr></tr>
         <tr>
-            <td><img src="https://github.com/yejinzz/triP/assets/124851544/76dcbf64-42cd-4cec-898b-222fda77da00"
+            <td><img width="100%" height="100%" src="https://github.com/yejinzz/triP/assets/124851544/76dcbf64-42cd-4cec-898b-222fda77da00"
                     alt="로그인"></td>
             <td>
               <strong>로그인</strong>
