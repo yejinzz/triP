@@ -59,8 +59,8 @@ exports.replaceAccessToken = async (req, res, next) => {
         req.user = user;
 
         res.header("Authorization", `Bearer ${accessToken}`);
+        next();
       });
-      next();
     } catch (err) {
       console.error(err.name, ":", err.message);
       return res.status(500).send({ msg: `${err.message}` });
