@@ -37,7 +37,6 @@ const UserProfileImg = () => {
               <p>사용할 프로필을 선택해주세요.</p>
             </div>
             <ProfileImgChangeForm
-              selecte={selectedProfile}
               setSelected={setSelectedProfile}
               onClose={() => setProfileModal(false)}
               onChange={handleProfileChange}

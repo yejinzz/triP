@@ -7,7 +7,7 @@ const ProfileSection = () => {
 
   return (
     <Profile>
-      <div className="thumb__wrap" aria-label="유저 프로필">
+      <div className="thumb__wrap">
         {/* <DefaultThumbNail /> */}
         <img
           className="thumb__img"

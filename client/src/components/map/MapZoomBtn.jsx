@@ -14,7 +14,7 @@ const ZoomBtn = () => {
       <Button
         variant="primary"
         // width="max-content"
-        aria-label="지도 확대 버튼"
+        aria-label="지도 확대"
         radius="10px"
         onClick={() => {
           dispatch(setMapLevel(mapLevel > 1 ? mapLevel - 1 : 1));
@@ -24,7 +24,7 @@ const ZoomBtn = () => {
       </Button>
       <Button
         variant="primary"
-        aria-label="지도 축소 버튼"
+        aria-label="지도 축소"
         radius="10px"
         onClick={() => {
           dispatch(setMapLevel(mapLevel < 14 ? mapLevel + 1 : 14));

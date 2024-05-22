@@ -17,7 +17,7 @@ const LoginForm = () => {
     handleSubmit,
     formState: { isDirty },
   } = useForm({ mode: "onChange" });
-  console.log(dialogContent);
+
   const onSubmit = (data) => {
     postLogin({
       email: data.email,

@@ -9,6 +9,7 @@ const MyPlanList = () => {
   useEffect(() => {
     instance.get(`/api/plan`).then((res) => {
       setAllPlan(res.data);
+      console.log(res.data);
     });
   }, []);
 
