@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser");
 const {
   verifyAccessToken,
   replaceAccessToken,
-} = require("./middlewares/verifyRefresh");
+} = require("./middlewares/verifyToken");
 
 // CORS 사용
 app.use(
@@ -34,7 +34,6 @@ app.use(cookieParser());
 //Router
 app.use("/api/auth", authRouter);
 app.use(verifyAccessToken, replaceAccessToken);
-// app.use("/api/mood", moodRouter);
 app.use("/api/user", userRouter);
 app.use("/api/places", placeRouter);
 app.use("/api/plan", planRouter);

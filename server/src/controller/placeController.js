@@ -5,19 +5,7 @@ const axios = require("axios");
 exports.crawlPlaceInfoByRegion = async (req, res) => {
   try {
     const data = await crawlData(req.query.regionCode, req.query.placeType);
-    // const places = data.map((item) => ({
-    //   regionCode: req.params.regionCode,
-    //   contentType: req.params.contentType,
-    //   placeInfo: {
-    //     name: item.name,
-    //     phoneNumber: item.phoneNumber,
-    //     usageTime: item.usageTime,
-    //     address: item.address,
-    //     siteUrl: item.siteUrl,
-    //     imgUrl: item.imgUrl,
 
-    //   },
-    // }));
     const places = data.map((item) => {
       const placeInfo = {
         name: item.name,

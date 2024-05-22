@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const axios = require("axios");
 
-async function crawlData(regionCode, placeType) {
+const crawlData = async (regionCode, placeType) => {
   const browser = await puppeteer.launch({
     headless: false,
   });
@@ -11,17 +11,6 @@ async function crawlData(regionCode, placeType) {
   await page.goto(
     `https://korean.visitkorea.or.kr/curation/cr_place_list.do?hotPlaceType=Place&regionCode=${regionCode}`
   );
-  // await page.waitForSelector("._sa_campaign-wrapper", { visible: true });
-  // await page.click("._sa_bottom-group > button");
-
-  // await page.click("div.hotplace_menu > a.on")
-  // const selector =
-  //   placeType === "restaurant"
-  //     ? "div.hotplace_menu > a[data-type='Restaurant']"
-  //     : "div.hotplace_menu > a[data-type='Place']";
-
-  // await page.click(selector);
-  // await page.waitForSelector("div.hotplace_menu", { visible: true });
 
   if (placeType === "restaurant") {
     await page.click("div.hotplace_menu > a[data-type='Restaurant']");
@@ -114,7 +103,7 @@ async function crawlData(regionCode, placeType) {
   await browser.close();
 
   return searchResults;
-}
+};
 
 // crawlData(1, "restaurant");
 

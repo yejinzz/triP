@@ -2,7 +2,6 @@ const Plan = require("../models/planModel");
 
 exports.getAllPlan = async (req, res) => {
   // const userId = new ObjectId(req.params.id);
-  console.log(req.user._id);
   try {
     // .exec() 를 뒤에 붙여줘야 실제로 데이터베이스에 요청이 됩니다.
     const planList = await Plan.find({ userId: req.user._id })
