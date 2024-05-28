@@ -1,6 +1,6 @@
-const Account = require("../models/accountModel");
+import Account from "../models/accountModel.js";
 
-exports.userAuthentication = async (req, res, next) => {
+const userAuthentication = async (req, res, next) => {
   try {
     const refreshToken = req.cookies.refresh_token;
     const findUser = await Account.findOne({ refreshToken }).exec();
@@ -16,3 +16,4 @@ exports.userAuthentication = async (req, res, next) => {
     res.status(500).json({ error: "서버 에러" });
   }
 };
+export default userAuthentication;

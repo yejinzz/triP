@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import hashPassword from "../lib/hashPassword.js";
+
 const { Schema } = mongoose;
-const jwt = require("jsonwebtoken");
-const { hashPassword } = require("../lib/hashPassword");
 
 const accountSchema = new Schema({
   username: String,
@@ -68,4 +69,4 @@ accountSchema.methods.generateToken = function () {
   return { accessToken, refreshToken };
 };
 
-module.exports = mongoose.model("Account", accountSchema);
+export default mongoose.model("Account", accountSchema);

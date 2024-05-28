@@ -1,8 +1,10 @@
-const crypto = require("crypto");
+import crypto from "crypto";
 
-exports.hashPassword = (pw) => {
+const hashPassword = (pw) => {
   return crypto
     .createHmac("sha256", process.env.SECRET_KEY)
     .update(pw)
     .digest("hex");
 };
+
+export default hashPassword;

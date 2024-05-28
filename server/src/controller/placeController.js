@@ -1,8 +1,11 @@
-const crawlData = require("../croller/placeInfoCrawl");
-const Place = require("../models/placeModel");
-const axios = require("axios");
+// const crawlData = require("../croller/placeInfoCrawl");
+import crawlData from "../croller/placeInfoCrawl.js";
+import Place from "../models/placeModel.js";
+import axios from "axios";
+// const Place = require("../models/placeModel");
+// const axios = require("axios");
 
-exports.crawlPlaceInfoByRegion = async (req, res) => {
+export const crawlPlaceInfoByRegion = async (req, res) => {
   try {
     const data = await crawlData(req.query.regionCode, req.query.placeType);
 
@@ -40,7 +43,7 @@ exports.crawlPlaceInfoByRegion = async (req, res) => {
 };
 const openApiURL = "https://apis.data.go.kr/B551011/KorService1";
 
-exports.getPlaceInfoByRegion = async (req, res) => {
+export const getPlaceInfoByRegion = async (req, res) => {
   try {
     const regionCode = req.query.regionCode;
     const placeType = req.query.placeType;
@@ -62,7 +65,7 @@ exports.getPlaceInfoByRegion = async (req, res) => {
   }
 };
 
-exports.getPlaceDetails = async (req, res) => {
+export const getPlaceDetails = async (req, res) => {
   try {
     const contentId = req.params.contentId;
     const placeType = req.query.placeType;
@@ -79,7 +82,7 @@ exports.getPlaceDetails = async (req, res) => {
   }
 };
 
-exports.getSearchPlace = async (req, res) => {
+export const getSearchPlace = async (req, res) => {
   try {
     const regionCode = req.query.regionCode;
     const placeType = req.query.placeType;

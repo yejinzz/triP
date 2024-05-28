@@ -1,13 +1,17 @@
-const express = require("express");
+// const express = require("express");
+import express from "express";
+import {
+  crawlPlaceInfoByRegion,
+  getPlaceInfoByRegion,
+  getSearchPlace,
+  getPlaceDetails,
+} from "../controller/placeController.js";
+// const placeCtrl = require("../controller/placeController");
+
 const router = express.Router();
-const placeCtrl = require("../controller/placeController");
 
-router
-  .route("/")
-  .post(placeCtrl.crawlPlaceInfoByRegion)
-  .get(placeCtrl.getPlaceInfoByRegion);
+router.route("/").post(crawlPlaceInfoByRegion).get(getPlaceInfoByRegion);
+router.get("/:contentId", getSearchPlace);
+router.get("/details/:contentId", getPlaceDetails);
 
-router.get("/:contentId", placeCtrl.getSearchPlace);
-router.get("/details/:contentId", placeCtrl.getPlaceDetails);
-
-module.exports = router;
+export default router;

@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+import mongoose from "mongoose";
+
 const { Schema } = mongoose;
 
 //생성될 필드명을 정한다.
@@ -17,4 +19,4 @@ const placeSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Place", placeSchema);
+export default mongoose.model("Place", placeSchema);

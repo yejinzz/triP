@@ -1,6 +1,9 @@
-const puppeteer = require("puppeteer");
-const cheerio = require("cheerio");
-const axios = require("axios");
+// const puppeteer = require("puppeteer");
+import puppeteer from "puppeteer";
+import cheerio from "cheerio";
+import axios from "axios";
+// const cheerio = require("cheerio");
+// const axios = require("axios");
 
 const crawlData = async (regionCode, placeType) => {
   const browser = await puppeteer.launch({
@@ -107,4 +110,4 @@ const crawlData = async (regionCode, placeType) => {
 
 // crawlData(1, "restaurant");
 
-module.exports = crawlData;
+export default crawlData;

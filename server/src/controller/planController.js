@@ -1,6 +1,7 @@
-const Plan = require("../models/planModel");
+// const Plan = require("../models/planModel");
+import Plan from "../models/planModel.js";
 
-exports.getAllPlan = async (req, res) => {
+export const getAllPlan = async (req, res) => {
   // const userId = new ObjectId(req.params.id);
   try {
     // .exec() 를 뒤에 붙여줘야 실제로 데이터베이스에 요청이 됩니다.
@@ -14,7 +15,7 @@ exports.getAllPlan = async (req, res) => {
   }
 };
 
-exports.getPlan = async (req, res) => {
+export const getPlan = async (req, res) => {
   console.log(req.params.planId);
   try {
     // .exec() 를 뒤에 붙여줘야 실제로 데이터베이스에 요청이 됩니다.
@@ -26,7 +27,7 @@ exports.getPlan = async (req, res) => {
   }
 };
 
-exports.createPlan = async (req, res) => {
+export const createPlan = async (req, res) => {
   const { startDate, endDate, destination, schedules } = req.body;
 
   const plan = new Plan({
@@ -46,7 +47,7 @@ exports.createPlan = async (req, res) => {
   }
 };
 
-exports.patchPlan = async (req, res) => {
+export const patchPlan = async (req, res) => {
   const planId = req.params.planId;
   try {
     await Plan.updateOne({ _id: planId }, { $set: req.body });
@@ -60,7 +61,7 @@ exports.patchPlan = async (req, res) => {
   }
 };
 
-exports.deletePlan = async (req, res) => {
+export const deletePlan = async (req, res) => {
   const planId = req.params.planId;
   try {
     await Plan.deleteOne({ _id: planId });

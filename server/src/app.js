@@ -1,21 +1,20 @@
-require("dotenv").config();
-const express = require("express");
-const app = express();
-const connectDB = require("./db/connect");
-const cors = require("cors");
-// const server = require("http").createServer(app);
-// const moodRouter = require("./routes/moodRoutes");
-const authRouter = require("./routes/authRoutes");
-const placeRouter = require("./routes/placeRoutes");
-const planRouter = require("./routes/planRoutes");
-const userRouter = require("./routes/userRoutes");
-const cookieParser = require("cookie-parser");
-const {
+import "dotenv/config";
+import express from "express";
+import connectDB from "./db/connect.js";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import {
   verifyAccessToken,
   replaceAccessToken,
-} = require("./middlewares/verifyToken");
-
+} from "./middlewares/verifyToken.js";
+import authRouter from "./routes/authRoutes.js";
+import placeRouter from "./routes/placeRoutes.js";
+import planRouter from "./routes/planRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 // CORS 사용
+
+const app = express();
+
 app.use(
   cors({
     origin: [

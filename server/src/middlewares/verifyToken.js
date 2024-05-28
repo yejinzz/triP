@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const Account = require("../models/accountModel");
+import jwt from "jsonwebtoken";
+import Account from "../models/accountModel.js";
 
-exports.verifyAccessToken = (req, res, next) => {
+export const verifyAccessToken = (req, res, next) => {
   // auth에서 access token을 획득합니다.
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(" ")[1]; // Bearer 제거
@@ -18,7 +18,7 @@ exports.verifyAccessToken = (req, res, next) => {
   });
 };
 
-exports.replaceAccessToken = async (req, res, next) => {
+export const replaceAccessToken = async (req, res, next) => {
   if (req.expired) {
     try {
       const cookies = req.cookies;

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const planSchema = new Schema(
@@ -29,4 +29,4 @@ const planSchema = new Schema(
   { timestamps: { createdAt: "created_At", updatedAt: false } }
 );
 
-module.exports = mongoose.model("Plan", planSchema);
+export default mongoose.model("Plan", planSchema);

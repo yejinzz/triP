@@ -1,7 +1,9 @@
-const Account = require("../models/accountModel");
-const { hashPassword } = require("../lib/hashPassword");
+// const Account = require("../models/accountModel");
+import Account from "../models/accountModel.js";
+import hashPassword from "../lib/hashPassword.js";
+// const { hashPassword } = require("../lib/hashPassword");
 // 계정 조회
-exports.patchUserInfo = async (req, res) => {
+export const patchUserInfo = async (req, res) => {
   const updateData = { ...req.body };
 
   const userId = req.params.id;
@@ -41,7 +43,7 @@ exports.patchUserInfo = async (req, res) => {
   return res.status(200).send("변경 완료");
 };
 
-exports.getUserInfo = async (req, res) => {
+export const getUserInfo = async (req, res) => {
   try {
     if (req.user)
       res.status(200).json({
@@ -56,7 +58,7 @@ exports.getUserInfo = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     await Account.deleteOne({ _id: req.user._id });
     res.status(200).send("계정 삭제 완료");

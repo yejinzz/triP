@@ -1,8 +1,8 @@
-const Joi = require("joi");
-const Account = require("../models/accountModel");
+import Joi from "joi";
+import Account from "../models/accountModel.js";
 
 // 로컬 회원가입
-exports.localSignup = async (req, res) => {
+export const localSignup = async (req, res) => {
   const schema = Joi.object().keys({
     username: Joi.string()
       .pattern(/^[a-zA-Z0-9가-힣]/)
@@ -52,7 +52,7 @@ exports.localSignup = async (req, res) => {
 };
 
 // 로컬 로그인
-exports.localLogin = async (req, res) => {
+export const localLogin = async (req, res) => {
   const schema = Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
@@ -117,7 +117,7 @@ exports.localLogin = async (req, res) => {
 };
 
 // 로그아웃
-exports.logout = async (req, res) => {
+export const logout = async (req, res) => {
   const cookies = req.cookies.refresh_token;
 
   try {

@@ -1,14 +1,18 @@
-const express = require("express");
-const router = express.Router();
-const planCtrl = require("../controller/planController");
+// const express = require("express");
+import express from "express";
+import {
+  getAllPlan,
+  createPlan,
+  getPlan,
+  patchPlan,
+  deletePlan,
+} from "../controller/planController.js";
+// const planCtrl = require("../controller/planController");
 
-router.route("/").get(planCtrl.getAllPlan).post(planCtrl.createPlan);
-// router.route("/:planId").patch(planCtrl.getPlan);
-router
-  .route("/:planId")
-  .get(planCtrl.getPlan)
-  .patch(planCtrl.patchPlan)
-  .delete(planCtrl.deletePlan);
+const router = express.Router();
+router.route("/").get(getAllPlan).post(createPlan);
+// router.route("/:planId").patch(getPlan);
+router.route("/:planId").get(getPlan).patch(patchPlan).delete(deletePlan);
 
 // router.route("/:planId").delete(planCtrl.deletePlan);
-module.exports = router;
+export default router;
